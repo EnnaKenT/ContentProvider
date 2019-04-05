@@ -35,8 +35,8 @@
             android:layout_height="wrap_content"
             app:backgroundTint="@color/colorPrimary"
             app:fabAlignmentMode="center"
-            app:fabCradleMargin="8dp"
-            app:fabCradleRoundedCornerRadius="4dp"/>
+            app:fabCradleMargin="@dimen/dimen_8dp"
+            app:fabCradleRoundedCornerRadius="@dimen/dimen_4dp"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
             app:layout_anchor="@id/bottomAppBar"
