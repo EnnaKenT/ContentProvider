@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.*
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
@@ -64,6 +66,30 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
+    private fun displayMaterialSnackBar() {
+        val marginSide = 0
+        val marginBottom = 550
+        val snackbar = Snackbar.make(
+            coordinatorLayout,
+            "FAB Clicked",
+            Snackbar.LENGTH_LONG
+        ).setAction("UNDO") {  }
+        // Changing message text color
+        snackbar.setActionTextColor(ContextCompat.getColor(this, R.color.colorPrimary))
+
+        val snackbarView = snackbar.view
+        val params = snackbarView.layoutParams as CoordinatorLayout.LayoutParams
+
+        params.setMargins(
+            params.leftMargin + marginSide,
+            params.topMargin,
+            params.rightMargin + marginSide,
+            params.bottomMargin + marginBottom
+        )
+
+        snackbarView.layoutParams = params
+        snackbar.show()
+    }
 
     /**
      * A [FragmentPagerAdapter] that returns a fragment corresponding to
