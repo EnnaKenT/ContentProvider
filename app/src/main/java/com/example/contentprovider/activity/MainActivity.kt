@@ -13,6 +13,9 @@ import com.example.contentprovider.R
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_main.view.*
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class MainActivity : AppCompatActivity() {
 
@@ -44,6 +47,18 @@ class MainActivity : AppCompatActivity() {
                 .setAction("Action", null).show()
         }
 
+        doSomething()
+    }
+
+    fun doSomething() = runBlocking {
+        val channel = Channel<Int>()
+        launch {
+            // this might be heavy CPU-consuming computation or async logic, we'll just send five squares
+            for (x in 1..5) channel.send(x * x)
+        }
+// here we print five received integers:
+        repeat(5) { println(channel.receive()) }
+        println("Done!")
     }
 
 
@@ -73,7 +88,7 @@ class MainActivity : AppCompatActivity() {
             coordinatorLayout,
             "FAB Clicked",
             Snackbar.LENGTH_LONG
-        ).setAction("UNDO") {  }
+        ).setAction("UNDO") { }
         // Changing message text color
         snackbar.setActionTextColor(ContextCompat.getColor(this, R.color.colorPrimary))
 
