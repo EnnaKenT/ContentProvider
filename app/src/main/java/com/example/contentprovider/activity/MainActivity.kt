@@ -13,7 +13,8 @@ import com.example.contentprovider.R
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_main.view.*
-import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
@@ -50,17 +51,15 @@ class MainActivity : AppCompatActivity() {
         doSomething()
     }
 
-    fun doSomething() = runBlocking {
-        val channel = Channel<Int>()
-        launch {
-            // this might be heavy CPU-consuming computation or async logic, we'll just send five squares
-            for (x in 1..5) channel.send(x * x)
+    private fun doSomething() = runBlocking {
+        GlobalScope.launch {
+            repeat(1000) { i ->
+                println("I'm sleeping $i ...")
+                delay(500L)
+            }
         }
-// here we print five received integers:
-        repeat(5) { println(channel.receive()) }
-        println("Done!")
+        delay(1300L) // just quit after delay
     }
-
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.

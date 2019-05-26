@@ -18,8 +18,10 @@ interface NoteRoomDao {
     @Delete
     suspend fun deleteNote(noteModel: NoteRoomModel)
 
-    // get all cars with specific condition
-    @Query("SELECT * FROM note_room_table WHERE note_id LIKE :noteId")
-    suspend fun getNoteById(noteId: String): List<NoteRoomModel>
+    @Query("SELECT * FROM note_room_table WHERE noteName LIKE :noteName")
+    suspend fun getNoteByName(noteName: String): List<NoteRoomModel>
+
+    @Query("SELECT * FROM note_room_table WHERE noteContent LIKE :noteContent")
+    suspend fun getNoteByContent(noteContent: String): List<NoteRoomModel>
 
 }

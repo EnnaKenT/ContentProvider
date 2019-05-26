@@ -1,4 +1,6 @@
 import androidx.room.*
+import com.example.contentprovider.activity.db.cooverters.TaskStatusEnum
+import java.util.*
 
 @Dao
 interface TaskRoomDao {
@@ -18,8 +20,16 @@ interface TaskRoomDao {
     @Delete
     suspend fun deleteTask(taskModel: TaskRoomModel)
 
-    // get all cars with specific condition
-    @Query("SELECT * FROM task_room_table WHERE task_id LIKE :taskId")
-    suspend fun getTaskById(taskId: String): List<TaskRoomModel>
+    @Query("SELECT * FROM task_room_table WHERE taskName LIKE :taskName")
+    suspend fun getTaskByName(taskName: String): List<TaskRoomModel>
+
+    @Query("SELECT * FROM task_room_table WHERE taskDescription LIKE :taskDescription")
+    suspend fun getTaskByDescr(taskDescription: String): List<TaskRoomModel>
+
+    @Query("SELECT * FROM task_room_table WHERE taskCreatedTime LIKE :taskCreatedTime")
+    suspend fun getTaskByCreatedTime(taskCreatedTime: Date): List<TaskRoomModel>
+
+    @Query("SELECT * FROM task_room_table WHERE taskStatusEnum LIKE :taskStatusEnum")
+    suspend fun getTaskByStatus(taskStatusEnum: TaskStatusEnum): List<TaskRoomModel>
 
 }
