@@ -1,4 +1,4 @@
-package com.example.contentprovider.activity
+package com.example.contentprovider.activity.ui.screens.main
 
 import android.os.Bundle
 import android.view.*
@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.example.contentprovider.R
+import com.example.contentprovider.activity.ui.screens.BaseActivity
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_main.view.*
@@ -18,7 +19,9 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity<MainPresenter, MainView>(), MainView {
+
+    override fun providePresenter(): MainPresenter = MainPresenterImpl()
 
     /**
      * The [androidx.viewpager.widget.PagerAdapter] that will provide
@@ -83,11 +86,8 @@ class MainActivity : AppCompatActivity() {
     private fun displayMaterialSnackBar() {
         val marginSide = 0
         val marginBottom = 550
-        val snackbar = Snackbar.make(
-            coordinatorLayout,
-            "FAB Clicked",
-            Snackbar.LENGTH_LONG
-        ).setAction("UNDO") { }
+        val snackbar = Snackbar.make(coordinatorLayout, "FAB Clicked", Snackbar.LENGTH_LONG)
+            .setAction("UNDO") { }
         // Changing message text color
         snackbar.setActionTextColor(ContextCompat.getColor(this, R.color.colorPrimary))
 
@@ -118,7 +118,9 @@ class MainActivity : AppCompatActivity() {
         override fun getItem(position: Int): Fragment {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1)
+            return PlaceholderFragment.newInstance(
+                position + 1
+            )
         }
 
         override fun getCount(): Int {

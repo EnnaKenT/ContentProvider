@@ -1,5 +1,5 @@
 import androidx.room.TypeConverter
-import com.example.contentprovider.activity.db.cooverters.TaskStatusEnum
+import com.example.contentprovider.activity.db.converters.TaskStatusEnum
 
 class TaskStatusTypeConverter {
     companion object {

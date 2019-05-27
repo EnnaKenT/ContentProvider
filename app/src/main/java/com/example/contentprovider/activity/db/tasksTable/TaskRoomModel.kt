@@ -1,6 +1,6 @@
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.contentprovider.activity.db.cooverters.TaskStatusEnum
+import com.example.contentprovider.activity.db.converters.TaskStatusEnum
 import java.util.*
 
 @Entity(tableName = "task_room_table")

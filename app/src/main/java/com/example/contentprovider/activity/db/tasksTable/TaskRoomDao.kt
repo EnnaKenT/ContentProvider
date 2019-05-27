@@ -1,5 +1,5 @@
 import androidx.room.*
-import com.example.contentprovider.activity.db.cooverters.TaskStatusEnum
+import com.example.contentprovider.activity.db.converters.TaskStatusEnum
 import java.util.*
 
 @Dao
