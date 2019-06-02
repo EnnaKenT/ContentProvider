@@ -3,14 +3,13 @@ package com.example.contentprovider.activity.ui.screens.main
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.example.contentprovider.R
-import com.example.contentprovider.activity.ui.screens.BaseActivity
+import com.example.contentprovider.activity.ui.screens.base.BaseActivity
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_main.view.*
@@ -19,9 +18,9 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
-class MainActivity : BaseActivity<MainPresenter, MainView>(), MainView {
+class MainActivity : BaseActivity<MainContract.Presenter, MainContract.View>(), MainContract.View {
 
-    override fun providePresenter(): MainPresenter = MainPresenterImpl()
+    override fun providePresenter(): MainContract.Presenter = MainPresenterImpl()
 
     /**
      * The [androidx.viewpager.widget.PagerAdapter] that will provide

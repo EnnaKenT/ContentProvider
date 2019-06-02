@@ -1,17 +1,7 @@
 package com.example.contentprovider.activity.ui.screens.main
 
-class MainPresenterImpl : MainPresenter {
-    private var mainView: MainView? = null
+import com.example.contentprovider.activity.ui.screens.base.BasePresenterImpl
 
-    override fun bindView(view: MainView) {
-        this.mainView = view
-    }
+class MainPresenterImpl : BasePresenterImpl<MainContract.View>(), MainContract.Presenter {
 
-    override fun unbindView() {
-        this.mainView = null
-    }
-
-    override fun onDestroy() {
-        this.mainView = null
-    }
 }
