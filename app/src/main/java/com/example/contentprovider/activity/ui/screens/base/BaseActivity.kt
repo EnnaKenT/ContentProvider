@@ -3,29 +3,43 @@ package com.example.contentprovider.activity.ui.screens.base
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 
-abstract class BaseActivity<T : BaseContract.Presenter<V>, in V : BaseContract.View>
+abstract class BaseActivity<T : BaseContract.Presenter<V>, V : BaseContract.View>
     : AppCompatActivity(), BaseContract.View {
 
-    protected var mPresenter: T? = null
-    abstract fun providePresenter(): T
+    protected lateinit var presenter: T
+    protected abstract val view: V
+    protected abstract fun createPresenter(): T
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mPresenter = providePresenter()
+
+        presenter = lastCustomNonConfigurationInstance as? T ?: createPresenter()
+        presenter.view = view
+    }
+
+    override fun onRetainCustomNonConfigurationInstance(): Any? {
+        return presenter
     }
 
     override fun onStart() {
         super.onStart()
-        mPresenter?.bindView(this@BaseActivity)
     }
 
     override fun onStop() {
         super.onStop()
-        mPresenter?.unbindView()
     }
 
     override fun onDestroy() {
+        presenter.view = null
+        presenter.onDestroy()
         super.onDestroy()
-        mPresenter?.unbindView()
+    }
+
+    override fun showError(text: String) {
+//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun showError(textRes: Int) {
+//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

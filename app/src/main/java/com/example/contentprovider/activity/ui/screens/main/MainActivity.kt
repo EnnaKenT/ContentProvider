@@ -20,7 +20,9 @@ import kotlinx.coroutines.runBlocking
 
 class MainActivity : BaseActivity<MainContract.Presenter, MainContract.View>(), MainContract.View {
 
-    override fun providePresenter(): MainContract.Presenter = MainPresenterImpl()
+    override fun createPresenter(): MainContract.Presenter = MainPresenter()
+    override val view: MainContract.View
+        get() = this
 
     /**
      * The [androidx.viewpager.widget.PagerAdapter] that will provide
