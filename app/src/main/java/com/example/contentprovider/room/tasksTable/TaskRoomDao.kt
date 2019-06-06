@@ -1,5 +1,7 @@
+package com.example.contentprovider.room.tasksTable
+
 import androidx.room.*
-import com.example.contentprovider.activity.db.converters.TaskStatusEnum
+import com.example.contentprovider.room.converters.TaskStatusEnum
 import java.util.*
 
 @Dao

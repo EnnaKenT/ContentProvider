@@ -1,10 +1,11 @@
-package com.example.contentprovider.activity.ui.screens.base
+package com.example.contentprovider.screens.base.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.example.contentprovider.screens.base.BaseContract
 
-abstract class BaseActivity<T : BaseContract.Presenter<V>, V : BaseContract.View>
-    : AppCompatActivity(), BaseContract.View {
+abstract class BaseActivity<T : BaseContract.Presenter<V>, V : BaseContract.View> : AppCompatActivity(),
+    BaseContract.View {
 
     protected lateinit var presenter: T
     protected abstract val view: V
@@ -12,10 +13,13 @@ abstract class BaseActivity<T : BaseContract.Presenter<V>, V : BaseContract.View
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(getLayoutId())
 
         presenter = lastCustomNonConfigurationInstance as? T ?: createPresenter()
         presenter.view = view
     }
+
+    protected abstract fun getLayoutId(): Int
 
     override fun onRetainCustomNonConfigurationInstance(): Any? {
         return presenter
@@ -23,10 +27,22 @@ abstract class BaseActivity<T : BaseContract.Presenter<V>, V : BaseContract.View
 
     override fun onStart() {
         super.onStart()
+        presenter.onStart()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        presenter.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        presenter.onPause()
     }
 
     override fun onStop() {
         super.onStop()
+        presenter.onStop()
     }
 
     override fun onDestroy() {

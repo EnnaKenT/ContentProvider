@@ -1,3 +1,5 @@
+package com.example.contentprovider.room.notesTable
+
 import androidx.room.*
 
 @Dao

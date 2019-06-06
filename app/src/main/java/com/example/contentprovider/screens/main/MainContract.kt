@@ -1,6 +1,6 @@
-package com.example.contentprovider.activity.ui.screens.main
+package com.example.contentprovider.screens.main
 
-import com.example.contentprovider.activity.ui.screens.base.BaseContract
+import com.example.contentprovider.screens.base.BaseContract
 
 class MainContract {
 

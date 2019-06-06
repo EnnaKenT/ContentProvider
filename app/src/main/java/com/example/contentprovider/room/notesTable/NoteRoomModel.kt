@@ -1,4 +1,5 @@
-import androidx.room.ColumnInfo
+package com.example.contentprovider.room.notesTable
+
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 

@@ -1,12 +1,20 @@
-package com.example.contentprovider.activity.ui.screens.base
+package com.example.contentprovider.screens.base
 
 import androidx.annotation.StringRes
 import kotlinx.coroutines.CoroutineScope
 
 class BaseContract {
 
-    interface Presenter<V : View>: CoroutineScope {
+    interface Presenter<V : View> : CoroutineScope {
         var view: V?
+
+        fun onStart()
+
+        fun onResume()
+
+        fun onPause()
+
+        fun onStop()
 
         fun onDestroy()
     }
