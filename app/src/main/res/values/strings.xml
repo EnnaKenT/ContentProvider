@@ -5,4 +5,6 @@
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="note_frag_title">Notes</string>
     <string name="task_frag_title">Tasks</string>
+    <string name="title">Title</string>
+    <string name="description">Description</string>
 </resources>

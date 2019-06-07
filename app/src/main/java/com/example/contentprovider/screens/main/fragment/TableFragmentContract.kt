@@ -4,15 +4,15 @@ import com.example.contentprovider.screens.base.BaseContract
 
 class TableFragmentContract {
 
-    interface Presenter: BaseContract.Presenter<View> {
+    interface Presenter<RoomModel> : BaseContract.Presenter<View<RoomModel>> {
 
-//        fun something()
+        fun prepareDatabaseModels()
 
     }
 
-    interface View: BaseContract.View {
+    interface View<RoomModel> : BaseContract.View {
 
-        //        fun something()
+        fun showDatabaseModels(models: MutableList<RoomModel>?)
     }
 
 }

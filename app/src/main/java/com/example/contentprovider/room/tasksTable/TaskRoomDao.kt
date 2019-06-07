@@ -8,7 +8,7 @@ import java.util.*
 interface TaskRoomDao {
 
     @Query("SELECT * FROM task_room_table")
-    suspend fun getAllTasks(): List<TaskRoomModel>
+    suspend fun getAllTasks(): MutableList<TaskRoomModel>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTasks(vararg taskModels: TaskRoomModel)
@@ -22,16 +22,16 @@ interface TaskRoomDao {
     @Delete
     suspend fun deleteTask(taskModel: TaskRoomModel)
 
-    @Query("SELECT * FROM task_room_table WHERE taskName LIKE :taskName")
-    suspend fun getTaskByName(taskName: String): List<TaskRoomModel>
+    @Query("SELECT * FROM task_room_table WHERE taskTitle LIKE :taskTitle")
+    suspend fun getTaskByName(taskTitle: String): MutableList<TaskRoomModel>
 
     @Query("SELECT * FROM task_room_table WHERE taskDescription LIKE :taskDescription")
-    suspend fun getTaskByDescr(taskDescription: String): List<TaskRoomModel>
+    suspend fun getTaskByDescr(taskDescription: String): MutableList<TaskRoomModel>
 
     @Query("SELECT * FROM task_room_table WHERE taskCreatedTime LIKE :taskCreatedTime")
-    suspend fun getTaskByCreatedTime(taskCreatedTime: Date): List<TaskRoomModel>
+    suspend fun getTaskByCreatedTime(taskCreatedTime: Date): MutableList<TaskRoomModel>
 
     @Query("SELECT * FROM task_room_table WHERE taskStatusEnum LIKE :taskStatusEnum")
-    suspend fun getTaskByStatus(taskStatusEnum: TaskStatusEnum): List<TaskRoomModel>
+    suspend fun getTaskByStatus(taskStatusEnum: TaskStatusEnum): MutableList<TaskRoomModel>
 
 }

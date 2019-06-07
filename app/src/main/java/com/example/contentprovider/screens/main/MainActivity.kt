@@ -1,57 +1,49 @@
 package com.example.contentprovider.screens.main
 
-import android.os.Bundle
+import android.app.Activity
+import android.content.Intent
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
 import com.example.contentprovider.R
+import com.example.contentprovider.screens.addTableItem.AddTableItemActivity
 import com.example.contentprovider.screens.base.activity.BaseActivity
-import com.example.contentprovider.screens.main.adapter.NoteTaskAdapter
-import com.example.contentprovider.screens.main.fragment.NotesFragment
-import com.example.contentprovider.screens.main.fragment.TasksFragment
+import com.example.contentprovider.screens.main.adapter.TableFragmentPagerAdapter
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : BaseActivity<MainContract.Presenter, MainContract.View>(), MainContract.View {
-
+class MainActivity : BaseActivity<MainContract.Presenter, MainContract.View>(), MainContract.View,
+    View.OnClickListener {
     override fun createPresenter(): MainContract.Presenter = MainPresenter()
+
     override val view: MainContract.View
         get() = this
 
-    /**
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * androidx.fragment.app.FragmentStatePagerAdapter.
-     */
-    private lateinit var sectionsPagerAdapter: NoteTaskAdapter
+    override fun getLayoutId() = R.layout.activity_main
+    private lateinit var fragmentPagerAdapter: TableFragmentPagerAdapter
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
+    override fun initData() {
         setSupportActionBar(bottomAppBar)
 
         initAdapter()
-
-        fab?.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-        }
+        initListener()
     }
 
-    override fun getLayoutId() = R.layout.activity_main
-
     private fun initAdapter() {
-        sectionsPagerAdapter = NoteTaskAdapter(supportFragmentManager)
-        sectionsPagerAdapter.addFragment(NotesFragment(), getString(R.string.note_frag_title))
-        sectionsPagerAdapter.addFragment(TasksFragment(), getString(R.string.task_frag_title))
+        fragmentPagerAdapter = TableFragmentPagerAdapter(supportFragmentManager)
 
         // Set up the ViewPager with the sections adapter.
-        viewPager.adapter = sectionsPagerAdapter
+        viewPager.adapter = fragmentPagerAdapter
+        val listener = fragmentPagerAdapter.CustomOnPageChangeListener()
+        viewPager.addOnPageChangeListener(listener)
         tabLayout.setupWithViewPager(viewPager)
-        presenter.onPause()
+    }
+
+    private fun initListener() {
+        fab?.setOnClickListener(this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -60,13 +52,46 @@ class MainActivity : BaseActivity<MainContract.Presenter, MainContract.View>(), 
         return true
     }
 
+    override fun onClick(v: View?) {
+        when (v?.id) {
+            R.id.fab -> {
+//                onPlusClicked()
+                Snackbar.make(v, "Replace with your own action", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show()
+            }
+        }
+    }
+
+    private fun onPlusClicked() {
+        AddTableItemActivity.startActivity(
+            this,
+            fragmentPagerAdapter.getSelectedTableEnum(),
+            ADD_TABLE_ITEM_REQUEST_CODE
+        )
+    }
+
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == ADD_TABLE_ITEM_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            val noteModel = data?.getSerializableExtra(AddTableItemActivity.RETURNED_NOTE_MODEL_NAME)
+            val taskModel = data?.getSerializableExtra(AddTableItemActivity.RETURNED_TASK_MODEL_NAME)
+
+            if (noteModel != null) {
+
+            }
+            if (taskModel != null) {
+
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data)
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        val id = item.itemId
 
-        when (id) {
+        when (item.itemId) {
             R.id.action_search -> Toast.makeText(this, getString(R.string.action_search), Toast.LENGTH_SHORT).show()
         }
 
@@ -93,6 +118,12 @@ class MainActivity : BaseActivity<MainContract.Presenter, MainContract.View>(), 
 
         snackbarView.layoutParams = params
         snackbar.show()
+    }
+
+    companion object {
+
+        private const val ADD_TABLE_ITEM_REQUEST_CODE = 1000
+
     }
 
 }

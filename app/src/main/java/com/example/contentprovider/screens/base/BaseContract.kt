@@ -23,7 +23,7 @@ class BaseContract {
 
         fun showError(text: String)
 
-        fun showError(@StringRes textRes: Int)
+        fun showError(@StringRes stringRes: Int)
     }
 
 }

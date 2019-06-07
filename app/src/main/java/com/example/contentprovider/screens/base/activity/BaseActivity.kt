@@ -1,6 +1,8 @@
 package com.example.contentprovider.screens.base.activity
 
 import android.os.Bundle
+import android.widget.Toast
+import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import com.example.contentprovider.screens.base.BaseContract
 
@@ -17,7 +19,11 @@ abstract class BaseActivity<T : BaseContract.Presenter<V>, V : BaseContract.View
 
         presenter = lastCustomNonConfigurationInstance as? T ?: createPresenter()
         presenter.view = view
+
+        initData()
     }
+
+    protected abstract fun initData()
 
     protected abstract fun getLayoutId(): Int
 
@@ -52,10 +58,10 @@ abstract class BaseActivity<T : BaseContract.Presenter<V>, V : BaseContract.View
     }
 
     override fun showError(text: String) {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        Toast.makeText(this, text, Toast.LENGTH_LONG).show()
     }
 
-    override fun showError(textRes: Int) {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun showError(@StringRes stringRes: Int) {
+        Toast.makeText(this, getString(stringRes), Toast.LENGTH_LONG).show()
     }
 }

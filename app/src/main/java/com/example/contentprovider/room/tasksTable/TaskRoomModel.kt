@@ -9,7 +9,7 @@ import java.util.*
 data class TaskRoomModel(
     @PrimaryKey(autoGenerate = true)
     var id: Int? = null,
-    val taskName: String,
+    val taskTitle: String?,
     val taskDescription: String,
     val taskCreatedTime: Date,
     val taskStatusEnum: TaskStatusEnum

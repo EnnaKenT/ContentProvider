@@ -4,10 +4,10 @@ import android.app.Application
 import com.example.contentprovider.room.AppDatabase
 import com.example.contentprovider.shredPrefs.SharedPreferencesHelper
 
-class ContentProviderApp : Application(), AppBridge {
+class App : Application(), AppBridge {
 
     private var sharedPreferencesHelper: SharedPreferencesHelper? = null
-    private var database: AppDatabase? = null
+//    private var database: AppDatabase? = null
 
     override fun onCreate() {
         super.onCreate()
@@ -17,11 +17,12 @@ class ContentProviderApp : Application(), AppBridge {
 
     private fun initEntities() {
         sharedPreferencesHelper = SharedPreferencesHelper(this)
-        database = AppDatabase.getAppDataBase(this)
+//        database =
+        AppDatabase.initAppDataBase(this)
     }
 
     override val getSharedPreferencesHelper = sharedPreferencesHelper
 
-    override val getDatabase = database
+//    override val getDatabase = database
 
 }

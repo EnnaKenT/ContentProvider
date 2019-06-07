@@ -3,7 +3,7 @@
           xmlns:tools="http://schemas.android.com/tools" package="com.example.contentprovider">
 
     <application
-            android:name="com.example.contentprovider.application.ContentProviderApp"
+            android:name="com.example.contentprovider.application.App"
             android:allowBackup="true"
             android:fullBackupContent="true"
             android:icon="@mipmap/ic_launcher"
@@ -21,6 +21,7 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity android:name=".screens.addTableItem.AddTableItemActivity" />
     </application>
 
 </manifest>

@@ -7,6 +7,6 @@ import androidx.room.PrimaryKey
 data class NoteRoomModel(
     @PrimaryKey(autoGenerate = true)
     var id: Int? = null,
-    val noteName: String,
-    val noteContent: String
+    val noteTitle: String?,
+    val noteDescription: String
 )

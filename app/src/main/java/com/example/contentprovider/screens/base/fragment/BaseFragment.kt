@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import com.example.contentprovider.screens.base.BaseContract
+import com.example.contentprovider.screens.base.activity.BaseActivity
 
 abstract class BaseFragment<T : BaseContract.Presenter<V>, V : BaseContract.View> : Fragment(), BaseContract.View {
 
@@ -19,7 +21,14 @@ abstract class BaseFragment<T : BaseContract.Presenter<V>, V : BaseContract.View
         return inflater.inflate(getLayoutId(), container, false)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initData()
+    }
+
     protected abstract fun getLayoutId(): Int
+
+    protected abstract fun initData()
 
     override fun onStart() {
         presenter.onStart()
@@ -48,11 +57,15 @@ abstract class BaseFragment<T : BaseContract.Presenter<V>, V : BaseContract.View
     }
 
     override fun showError(text: String) {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        if (activity is BaseActivity<*, *>) {
+            (activity as BaseActivity<*, *>).showError(text)
+        }
     }
 
-    override fun showError(textRes: Int) {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun showError(@StringRes stringRes: Int) {
+        if (activity is BaseActivity<*, *>) {
+            (activity as BaseActivity<*, *>).showError(stringRes)
+        }
     }
 
 }
