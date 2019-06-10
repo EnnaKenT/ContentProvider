@@ -1,5 +1,5 @@
 package com.example.contentprovider.room.converters
 
-enum class TaskStatusEnum {
-    IN_PROGRESS, DONE, CANCELLED
+enum class TaskStatusEnum(val text: String) {
+    IN_PROGRESS("In progress"), DONE("Done"), CANCELLED("Cancelled")
 }

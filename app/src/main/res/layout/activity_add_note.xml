@@ -10,13 +10,13 @@
     tools:context=".screens.addNote.AddNoteActivity">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+        android:id="@+id/toolbar_add_note"
         android:layout_width="match_parent"
         android:layout_height="?android:actionBarSize"
         android:background="@color/primaryColor" />
 
     <EditText
-        android:id="@+id/et_title_add_item"
+        android:id="@+id/et_title_add_note"
         style="@style/TableItemTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -28,7 +28,7 @@
         tools:ignore="Autofill" />
 
     <EditText
-        android:id="@+id/et_description_add_item"
+        android:id="@+id/et_description_add_note"
         style="@style/TableItemDescription"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -44,7 +44,7 @@
         tools:targetApi="o" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/mbtn_save_add_item"
+        android:id="@+id/mbtn_save_add_note"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

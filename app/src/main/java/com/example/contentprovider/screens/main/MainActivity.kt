@@ -11,7 +11,7 @@ import com.example.contentprovider.screens.addNote.AddNoteActivity
 import com.example.contentprovider.screens.addTask.AddTaskActivity
 import com.example.contentprovider.screens.base.activity.BaseActivity
 import com.example.contentprovider.screens.main.adapter.TableFragmentPagerAdapter
-import com.example.contentprovider.screens.main.adapter.factory.TableTypeEnum
+import com.example.contentprovider.screens.main.adapter.TableTypeEnum
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -66,8 +66,8 @@ class MainActivity : BaseActivity<MainContract.Presenter, MainContract.View>(), 
 
     private fun startAddItemActivity(tableTypeEnum: TableTypeEnum) {
         when (tableTypeEnum) {
-            TableTypeEnum.NOTE -> AddNoteActivity.startActivity(this)
-            TableTypeEnum.TASK -> AddTaskActivity.startActivity(this)
+            TableTypeEnum.NOTES -> AddNoteActivity.startActivity(this)
+            TableTypeEnum.TASKS -> AddTaskActivity.startActivity(this)
         }
         overridePendingTransition(R.anim.slide_from_bottom, R.anim.slide_to_top)
     }

@@ -10,7 +10,7 @@ import com.example.contentprovider.utils.isDbDescriptionValid
 import kotlinx.android.synthetic.main.activity_add_note.*
 
 class AddNoteActivity : BaseActivity<AddNoteContract.Presenter, AddNoteContract.View>(),
-    AddNoteContract.View, View.OnClickListener {
+        AddNoteContract.View, View.OnClickListener {
     private var noteModel: NoteRoomModel? = null
 
     override val view = this
@@ -21,7 +21,7 @@ class AddNoteActivity : BaseActivity<AddNoteContract.Presenter, AddNoteContract.
     override fun initData() {
         getPresenterRoomModel()
         prepareActionBar()
-        mbtn_save_add_item.setOnClickListener(this)
+        mbtn_save_add_note.setOnClickListener(this)
     }
 
     private fun getPresenterRoomModel() {
@@ -30,7 +30,7 @@ class AddNoteActivity : BaseActivity<AddNoteContract.Presenter, AddNoteContract.
     }
 
     private fun prepareActionBar() {
-        setSupportActionBar(toolbar)
+        setSupportActionBar(toolbar_add_note)
 
         supportActionBar?.run {
             title = getString(R.string.note)
@@ -40,15 +40,18 @@ class AddNoteActivity : BaseActivity<AddNoteContract.Presenter, AddNoteContract.
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.mbtn_save_add_item -> onSaveBtnClicked()
+            R.id.mbtn_save_add_task -> onSaveBtnClicked()
         }
     }
 
     private fun onSaveBtnClicked() {
-        if (et_description_add_item.isDbDescriptionValid()) {
-            val title = et_title_add_item.text
-            val description = et_description_add_item
+        et_description_add_note.error = ""
+        if (et_description_add_note.isDbDescriptionValid()) {
+            val title = et_title_add_note.text
+            val description = et_description_add_note.text
             presenter.saveModel(title, description)
+        } else {
+            et_description_add_note.error = getString(R.string.descr_error)
         }
     }
 

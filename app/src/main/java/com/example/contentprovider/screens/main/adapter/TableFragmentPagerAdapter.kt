@@ -4,7 +4,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
-import com.example.contentprovider.screens.main.adapter.factory.TableTypeEnum
 import com.example.contentprovider.screens.main.adapter.factory.TableFragmentFactory
 
 
