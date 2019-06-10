@@ -13,15 +13,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
+        app:tabBackground="@color/primaryLightColor"
         app:tabGravity="fill"
-        app:tabIndicatorHeight="4dp"
-        app:tabMode="fixed" />
+        app:tabIndicatorHeight="@dimen/dimen_4dp"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="@color/charcoal"
+        app:tabTextColor="@color/nobel" />
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:backgroundTint="@color/primaryLightColor"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tabLayout" />
@@ -38,6 +42,7 @@
             android:layout_height="wrap_content"
             android:rotation="45"
             android:src="@android:drawable/ic_menu_close_clear_cancel"
+            app:backgroundTint="@color/primaryLightColor"
             app:layout_anchor="@id/bottomAppBar" />
 
         <com.google.android.material.bottomappbar.BottomAppBar
@@ -45,7 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            app:backgroundTint="@color/colorPrimary"
+            app:backgroundTint="@color/primaryColor"
             app:fabAlignmentMode="center"
             app:fabCradleMargin="@dimen/dimen_4dp"
             app:fabCradleRoundedCornerRadius="@dimen/dimen_4dp"

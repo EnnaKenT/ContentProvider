@@ -6,10 +6,12 @@
     android:layout_height="wrap_content"
     android:padding="@dimen/activity_vertical_margin">
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="@dimen/dimen_5dp">
+        app:cardCornerRadius="@dimen/dimen_5dp"
+        app:strokeColor="@color/primaryColor"
+        app:strokeWidth="@dimen/dimen_2dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -57,6 +59,6 @@
 
         </LinearLayout>
 
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 
 </FrameLayout>

@@ -5,7 +5,7 @@ import kotlinx.coroutines.CoroutineScope
 
 class BaseContract {
 
-    interface Presenter<V : View> : CoroutineScope {
+    interface BasePresenter<V : BaseView> : CoroutineScope {
         var view: V?
 
         fun onStart()
@@ -19,7 +19,7 @@ class BaseContract {
         fun onDestroy()
     }
 
-    interface View {
+    interface BaseView {
 
         fun showError(text: String)
 

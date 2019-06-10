@@ -4,7 +4,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlin.coroutines.CoroutineContext
 
-abstract class BasePresenter<V : BaseContract.View> : BaseContract.Presenter<V> {
+abstract class BasePresenter<V : BaseContract.BaseView> : BaseContract.BasePresenter<V> {
 
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main + job

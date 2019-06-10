@@ -3,15 +3,18 @@ package com.example.contentprovider.screens.main.fragment.tasks
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.contentprovider.R
 import com.example.contentprovider.room.tasksTable.TaskRoomModel
+import com.example.contentprovider.screens.addTask.AddTaskActivity
 import com.example.contentprovider.screens.base.fragment.BaseFragment
 import com.example.contentprovider.screens.main.adapter.TasksTableAdapter
 import com.example.contentprovider.screens.main.fragment.TableFragmentContract
 import com.example.contentprovider.screens.main.fragment.notes.NotesFragment
+import com.example.contentprovider.utils.setGone
+import com.example.contentprovider.utils.setVisible
 import kotlinx.android.synthetic.main.fragment_table.*
 
 class TasksFragment :
-        BaseFragment<TableFragmentContract.Presenter<TaskRoomModel>, TableFragmentContract.View<TaskRoomModel>>(),
-        TableFragmentContract.View<TaskRoomModel>, (TaskRoomModel) -> Unit {
+    BaseFragment<TableFragmentContract.Presenter<TaskRoomModel>, TableFragmentContract.View<TaskRoomModel>>(),
+    TableFragmentContract.View<TaskRoomModel>, (TaskRoomModel) -> Unit {
 
     private lateinit var tasksAdapter: TasksTableAdapter
 
@@ -32,14 +35,20 @@ class TasksFragment :
     }
 
     override fun invoke(taskModel: TaskRoomModel) {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        activity?.let {
+            AddTaskActivity.startActivity(it, taskModel)
+            it.overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left)
+        }
     }
 
     override fun showDatabaseModels(models: MutableList<TaskRoomModel>?) {
         if (models.isNullOrEmpty()) {
-            //show placeholder
+            tv_no_items?.setVisible()
+            rv_table?.setGone()
         } else {
             tasksAdapter.setItems(models)
+            tv_no_items?.setGone()
+            rv_table?.setVisible()
         }
     }
 

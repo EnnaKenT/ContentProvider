@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context=".screens.addNote.AddNoteActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?android:actionBarSize"
+        android:background="@color/primaryColor" />
+
+    <EditText
+        android:id="@+id/et_title_add_item"
+        style="@style/TableItemTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/activity_vertical_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_marginEnd="@dimen/activity_vertical_margin"
+        android:hint="@string/title"
+        android:inputType="textCapSentences"
+        tools:ignore="Autofill" />
+
+    <EditText
+        android:id="@+id/et_description_add_item"
+        style="@style/TableItemDescription"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/activity_vertical_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_marginEnd="@dimen/activity_vertical_margin"
+        android:layout_weight="1"
+        android:focusedByDefault="true"
+        android:gravity="top"
+        android:hint="@string/description"
+        android:inputType="textCapSentences"
+        tools:ignore="Autofill"
+        tools:targetApi="o" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/mbtn_save_add_item"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_vertical_margin"
+        android:text="@string/save"
+        app:cornerRadius="30dp"
+        app:strokeColor="@color/primaryColor"
+        app:strokeWidth="@dimen/dimen_1_5dp" />
+
+</LinearLayout>

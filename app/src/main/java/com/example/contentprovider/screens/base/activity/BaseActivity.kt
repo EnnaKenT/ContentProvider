@@ -6,8 +6,8 @@ import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import com.example.contentprovider.screens.base.BaseContract
 
-abstract class BaseActivity<T : BaseContract.Presenter<V>, V : BaseContract.View> : AppCompatActivity(),
-    BaseContract.View {
+abstract class BaseActivity<T : BaseContract.BasePresenter<V>, V : BaseContract.BaseView> : AppCompatActivity(),
+    BaseContract.BaseView {
 
     protected lateinit var presenter: T
     protected abstract val view: V

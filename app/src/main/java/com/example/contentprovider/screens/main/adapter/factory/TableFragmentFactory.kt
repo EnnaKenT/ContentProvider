@@ -6,14 +6,14 @@ import com.example.contentprovider.screens.main.fragment.tasks.TasksFragment
 
 object TableFragmentFactory {
 
-    fun getFragment(type: TableEnumType): Fragment {
+    fun getFragment(type: TableTypeEnum): Fragment {
         return when (type) {
-            TableEnumType.NOTE -> NotesFragment()
-            TableEnumType.TASK -> TasksFragment()
+            TableTypeEnum.NOTE -> NotesFragment()
+            TableTypeEnum.TASK -> TasksFragment()
         }
     }
 
-    fun getTitle(type: TableEnumType): String {
+    fun getTitle(type: TableTypeEnum): String {
         return type.name
     }
 }

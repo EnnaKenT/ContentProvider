@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import com.example.contentprovider.screens.base.BaseContract
 import com.example.contentprovider.screens.base.activity.BaseActivity
 
-abstract class BaseFragment<T : BaseContract.Presenter<V>, V : BaseContract.View> : Fragment(), BaseContract.View {
+abstract class BaseFragment<T : BaseContract.BasePresenter<V>, V : BaseContract.BaseView> : Fragment(), BaseContract.BaseView {
 
     protected lateinit var presenter: T
     protected abstract val view: V

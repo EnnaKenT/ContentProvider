@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#bdbdbd</color>
-    <color name="colorPrimaryDark">#8d8d8d</color>
-    <color name="colorPrimaryLight">#efefef</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="primaryColor">#90a4ae</color>
+    <color name="primaryLightColor">#c1d5e0</color>
+    <color name="primaryDarkColor">#62757f</color>
+    <color name="primaryTextColor">@color/charcoal</color>
+    <color name="colorAccent">@color/primaryLightColor</color>
+
+    <color name="charcoal">#444444</color>
+    <color name="dim_gray">#696969</color>
+    <color name="grey">#878787</color>
+    <color name="nobel">#9F9F9F</color>
 </resources>

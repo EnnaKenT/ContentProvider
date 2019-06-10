@@ -3,14 +3,17 @@ package com.example.contentprovider.screens.main.fragment.notes
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.contentprovider.R
 import com.example.contentprovider.room.notesTable.NoteRoomModel
+import com.example.contentprovider.screens.addNote.AddNoteActivity
 import com.example.contentprovider.screens.base.fragment.BaseFragment
 import com.example.contentprovider.screens.main.adapter.NotesTableAdapter
 import com.example.contentprovider.screens.main.fragment.TableFragmentContract
+import com.example.contentprovider.utils.setGone
+import com.example.contentprovider.utils.setVisible
 import kotlinx.android.synthetic.main.fragment_table.*
 
 class NotesFragment :
-        BaseFragment<TableFragmentContract.Presenter<NoteRoomModel>, TableFragmentContract.View<NoteRoomModel>>(),
-        TableFragmentContract.View<NoteRoomModel>, (NoteRoomModel) -> Unit {
+    BaseFragment<TableFragmentContract.Presenter<NoteRoomModel>, TableFragmentContract.View<NoteRoomModel>>(),
+    TableFragmentContract.View<NoteRoomModel>, (NoteRoomModel) -> Unit {
 
     private lateinit var notesAdapter: NotesTableAdapter
 
@@ -31,14 +34,20 @@ class NotesFragment :
     }
 
     override fun invoke(noteModel: NoteRoomModel) {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        activity?.let {
+            AddNoteActivity.startActivity(it, noteModel)
+            it.overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right)
+        }
     }
 
     override fun showDatabaseModels(models: MutableList<NoteRoomModel>?) {
         if (models.isNullOrEmpty()) {
-            //show placeholder
+            tv_no_items?.setVisible()
+            rv_table?.setGone()
         } else {
             notesAdapter.setItems(models)
+            tv_no_items?.setGone()
+            rv_table?.setVisible()
         }
     }
 
