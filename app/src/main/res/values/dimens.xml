@@ -15,4 +15,9 @@
     <dimen name="dimen_12dp">12dp</dimen>
     <dimen name="dimen_15dp">15dp</dimen>
     <dimen name="dimen_16dp">16dp</dimen>
+    <dimen name="dimen_20dp">20dp</dimen>
+
+    <dimen name="rv_padding">@dimen/dimen_5dp</dimen>
+    <dimen name="card_corner_radius">@dimen/dimen_5dp</dimen>
+    <dimen name="card_width">@dimen/dimen_1_5dp</dimen>
 </resources>

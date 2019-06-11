@@ -12,4 +12,11 @@
     <string name="no_items">No items</string>
     <string name="save">save</string>
     <string name="descr_error">Description required</string>
+    <string name="delete">Delete</string>
+    <string name="yes">yes</string>
+    <string name="no">no</string>
+    <string name="delete_task_dialog_msg">Are you sure want to delete task?</string>
+    <string name="delete_task_dialog_title">Delete task</string>
+    <string name="delete_note_dialog_msg">Are you sure want to delete note?</string>
+    <string name="delete_note_dialog_title">Delete note</string>
 </resources>

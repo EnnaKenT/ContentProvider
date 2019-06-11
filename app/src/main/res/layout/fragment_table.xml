@@ -8,6 +8,7 @@
         android:id="@+id/rv_table"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:padding="@dimen/rv_padding"
         tools:item="3" />
 
     <TextView
