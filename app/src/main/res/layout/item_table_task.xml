@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/rv_padding">
+    android:foreground="?android:attr/selectableItemBackground"
+    android:padding="@dimen/rv_padding"
+    android:transitionName="@string/db_item_transition_name">
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
@@ -31,6 +33,7 @@
                 style="@style/TableItemDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:maxLines="10"
                 android:paddingBottom="@dimen/rv_padding"
                 tools:text="Body" />
 

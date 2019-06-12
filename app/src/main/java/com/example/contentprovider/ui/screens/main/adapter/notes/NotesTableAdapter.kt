@@ -10,7 +10,7 @@ import com.example.contentprovider.utils.setGone
 import com.example.contentprovider.utils.setVisible
 import kotlinx.android.synthetic.main.item_table_note.view.*
 
-class NotesTableAdapter(private val listener: (NoteRoomModel) -> Unit) :
+class NotesTableAdapter(private val listener: (NoteRoomModel, View) -> Unit) :
         RecyclerView.Adapter<NotesTableAdapter.NotesViewHolder>() {
 
     private var notesList = mutableListOf<NoteRoomModel>()
@@ -32,7 +32,7 @@ class NotesTableAdapter(private val listener: (NoteRoomModel) -> Unit) :
             holder.bind(notesList[position], listener)
 
     inner class NotesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(noteModel: NoteRoomModel, listener: (NoteRoomModel) -> Unit) =
+        fun bind(noteModel: NoteRoomModel, listener: (NoteRoomModel, View) -> Unit) =
                 with(itemView) {
                     if (noteModel.noteTitle.isNullOrEmpty()) {
                         tv_title.setGone()
@@ -43,7 +43,7 @@ class NotesTableAdapter(private val listener: (NoteRoomModel) -> Unit) :
 
                     tv_description.text = noteModel.noteDescription
 
-                    setOnClickListener { listener(noteModel) }
+                    setOnClickListener { listener(noteModel, this) }
                 }
     }
 }

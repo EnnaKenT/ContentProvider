@@ -60,7 +60,7 @@ class AddTaskActivity : BaseActivity<AddTaskContract.Presenter, AddTaskContract.
                 getString(R.string.delete_task_dialog_msg)
         )
 
-        dialog.setLeftBtnListener(object: OkCancelDialog.OnLeftBtnClickListener {
+        dialog.setLeftBtnListener(object : OkCancelDialog.OnLeftBtnClickListener {
             override fun btnClicked() {
                 presenter.deleteItemFromDb()
             }
@@ -132,31 +132,16 @@ class AddTaskActivity : BaseActivity<AddTaskContract.Presenter, AddTaskContract.
         onBackPressed()
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
-        return true
-    }
-
-    override fun onBackPressed() {
-        super.onBackPressed()
-
-        if (presenter.getRoomModel() == null) {
-            overridePendingTransition(R.anim.slide_from_top, R.anim.slide_to_bottom)
-        } else {
-            overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right)
-        }
-    }
-
 
     companion object {
 
         private const val ARG_TASK_MODEL = "arg_task_model"
 
-        fun startActivity(activity: Activity, taskModel: TaskRoomModel? = null) {
+        fun getIntent(activity: Activity, taskModel: TaskRoomModel? = null): Intent {
             val intent = Intent(activity, AddTaskActivity::class.java)
             taskModel?.let { intent.putExtra(ARG_TASK_MODEL, taskModel) }
 
-            activity.startActivity(intent)
+            return intent
         }
     }
 

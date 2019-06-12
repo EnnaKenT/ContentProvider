@@ -1,6 +1,7 @@
 package com.example.contentprovider.ui.screens.main.fragment.tasks
 
-import android.content.Intent
+import android.app.ActivityOptions
+import android.view.View
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.contentprovider.R
 import com.example.contentprovider.room.tasksTable.TaskRoomModel
@@ -17,7 +18,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 @ExperimentalCoroutinesApi
 class TasksFragment :
         BaseFragment<TableFragmentContract.Presenter<TaskRoomModel>, TableFragmentContract.View<TaskRoomModel>>(),
-        TableFragmentContract.View<TaskRoomModel>, (TaskRoomModel) -> Unit {
+        TableFragmentContract.View<TaskRoomModel>, (TaskRoomModel, View) -> Unit {
 
     private lateinit var tasksAdapter: TasksTableAdapter
 
@@ -53,16 +54,14 @@ class TasksFragment :
         rv_table.setHasFixedSize(true)
     }
 
-    override fun invoke(taskModel: TaskRoomModel) {
+    override fun invoke(taskModel: TaskRoomModel, view: View) {
         activity?.let {
-            AddTaskActivity.startActivity(it, taskModel)
-            it.overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left)
+            val transitionName = getString(R.string.db_item_transition_name)
+
+            val transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation(it, view, transitionName)
+            val intent = AddTaskActivity.getIntent(it, taskModel)
+            startActivity(intent, transitionActivityOptions.toBundle())
         }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-
-        super.onActivityResult(requestCode, resultCode, data)
     }
 
     override fun showDatabaseModels(models: MutableList<TaskRoomModel>?) {

@@ -57,6 +57,7 @@ class AddNoteActivity : BaseActivity<AddNoteContract.Presenter, AddNoteContract.
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_delete -> showDeleteDialog()
+            16908332 -> onBackPressed() //back arrow id
         }
 
         return true
@@ -118,30 +119,15 @@ class AddNoteActivity : BaseActivity<AddNoteContract.Presenter, AddNoteContract.
         onBackPressed()
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
-        return true
-    }
-
-    override fun onBackPressed() {
-        super.onBackPressed()
-
-        if (presenter.getRoomModel() == null) {
-            overridePendingTransition(R.anim.slide_from_top, R.anim.slide_to_bottom)
-        } else {
-            overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left)
-        }
-    }
-
     companion object {
 
         private const val ARG_NOTE_MODEL = "arg_note_model"
 
-        fun startActivity(activity: Activity, noteModel: NoteRoomModel? = null) {
+        fun getIntent(activity: Activity, noteModel: NoteRoomModel? = null): Intent {
             val intent = Intent(activity, AddNoteActivity::class.java)
             noteModel?.let { intent.putExtra(ARG_NOTE_MODEL, noteModel) }
 
-            activity.startActivity(intent)
+            return intent
         }
 
     }

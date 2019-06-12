@@ -10,4 +10,8 @@
     <color name="dim_gray">#696969</color>
     <color name="grey">#878787</color>
     <color name="nobel">#9F9F9F</color>
+
+    <color name="malachite_green">#FF00CC66</color>
+    <color name="nordic">#FF1A3035</color>
+
 </resources>

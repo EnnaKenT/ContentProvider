@@ -1,5 +1,7 @@
 package com.example.contentprovider.ui.screens.main.fragment.notes
 
+import android.app.ActivityOptions
+import android.view.View
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.contentprovider.R
 import com.example.contentprovider.room.notesTable.NoteRoomModel
@@ -15,7 +17,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 @ExperimentalCoroutinesApi
 class NotesFragment :
         BaseFragment<TableFragmentContract.Presenter<NoteRoomModel>, TableFragmentContract.View<NoteRoomModel>>(),
-        TableFragmentContract.View<NoteRoomModel>, (NoteRoomModel) -> Unit {
+        TableFragmentContract.View<NoteRoomModel>, (NoteRoomModel, View) -> Unit {
 
     private lateinit var notesAdapter: NotesTableAdapter
 
@@ -48,10 +50,13 @@ class NotesFragment :
         rv_table.setHasFixedSize(true)
     }
 
-    override fun invoke(noteModel: NoteRoomModel) {
+    override fun invoke(noteModel: NoteRoomModel, view: View) {
         activity?.let {
-            AddNoteActivity.startActivity(it, noteModel)
-            it.overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right)
+            val transitionName = getString(R.string.db_item_transition_name)
+
+            val transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation(it, view, transitionName)
+            val intent = AddNoteActivity.getIntent(it, noteModel)
+            startActivity(intent, transitionActivityOptions.toBundle())
         }
     }
 

@@ -19,4 +19,6 @@
     <string name="delete_task_dialog_title">Delete task</string>
     <string name="delete_note_dialog_msg">Are you sure want to delete note?</string>
     <string name="delete_note_dialog_title">Delete note</string>
+    <string name="db_item_transition_name">db_item_transition_name</string>
+    <string name="toolbar_transition_name">toolbar_transition_name</string>
 </resources>

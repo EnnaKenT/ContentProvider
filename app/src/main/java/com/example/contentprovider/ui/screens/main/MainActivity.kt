@@ -1,22 +1,20 @@
 package com.example.contentprovider.ui.screens.main
 
+import android.app.ActivityOptions
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
-import androidx.coordinatorlayout.widget.CoordinatorLayout
-import androidx.core.content.ContextCompat
 import com.example.contentprovider.R
 import com.example.contentprovider.ui.screens.addNote.AddNoteActivity
 import com.example.contentprovider.ui.screens.addTask.AddTaskActivity
 import com.example.contentprovider.ui.screens.base.activity.BaseActivity
 import com.example.contentprovider.ui.screens.main.adapter.TableFragmentPagerAdapter
 import com.example.contentprovider.ui.screens.main.adapter.TableTypeEnum
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity<MainContract.Presenter, MainContract.View>(), MainContract.View,
-    View.OnClickListener {
+        View.OnClickListener {
 
     private lateinit var fragmentPagerAdapter: TableFragmentPagerAdapter
 
@@ -66,10 +64,28 @@ class MainActivity : BaseActivity<MainContract.Presenter, MainContract.View>(), 
 
     private fun startAddItemActivity(tableTypeEnum: TableTypeEnum) {
         when (tableTypeEnum) {
-            TableTypeEnum.NOTES -> AddNoteActivity.startActivity(this)
-            TableTypeEnum.TASKS -> AddTaskActivity.startActivity(this)
+            TableTypeEnum.NOTES -> startNoteActivity()
+            TableTypeEnum.TASKS -> startTaskActivity()
         }
-        overridePendingTransition(R.anim.slide_from_bottom, R.anim.slide_to_top)
+    }
+
+    private fun startTaskActivity() {
+        val intent = AddTaskActivity.getIntent(this)
+
+        val transitionName = getString(R.string.toolbar_transition_name)
+
+        val transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation(this, bottomAppBar, transitionName)
+        startActivity(intent, transitionActivityOptions.toBundle())
+
+    }
+
+    private fun startNoteActivity() {
+        val intent = AddNoteActivity.getIntent(this)
+
+        val transitionName = getString(R.string.toolbar_transition_name)
+
+        val transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation(this, bottomAppBar, transitionName)
+        startActivity(intent, transitionActivityOptions.toBundle())
     }
 
 
@@ -83,28 +99,6 @@ class MainActivity : BaseActivity<MainContract.Presenter, MainContract.View>(), 
         }
 
         return true
-    }
-
-    private fun displayMaterialSnackBar() {
-        val marginSide = 0
-        val marginBottom = 550
-        val snackbar = Snackbar.make(coordinatorLayout, "FAB Clicked", Snackbar.LENGTH_LONG)
-            .setAction("UNDO") { }
-        // Changing message text color
-        snackbar.setActionTextColor(ContextCompat.getColor(this, R.color.primaryColor))
-
-        val snackbarView = snackbar.view
-        val params = snackbarView.layoutParams as CoordinatorLayout.LayoutParams
-
-        params.setMargins(
-            params.leftMargin + marginSide,
-            params.topMargin,
-            params.rightMargin + marginSide,
-            params.bottomMargin + marginBottom
-        )
-
-        snackbarView.layoutParams = params
-        snackbar.show()
     }
 
 }

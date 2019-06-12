@@ -11,7 +11,7 @@ import com.example.contentprovider.utils.setGone
 import com.example.contentprovider.utils.setVisible
 import kotlinx.android.synthetic.main.item_table_task.view.*
 
-class TasksTableAdapter(private val listener: (TaskRoomModel) -> Unit) :
+class TasksTableAdapter(private val listener: (TaskRoomModel, View) -> Unit) :
         RecyclerView.Adapter<TasksTableAdapter.TaskViewHolder>() {
 
     private var taskList = mutableListOf<TaskRoomModel>()
@@ -33,7 +33,7 @@ class TasksTableAdapter(private val listener: (TaskRoomModel) -> Unit) :
             holder.bind(taskList[position], listener)
 
     inner class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(taskModel: TaskRoomModel, listener: (TaskRoomModel) -> Unit) =
+        fun bind(taskModel: TaskRoomModel, listener: (TaskRoomModel, View) -> Unit) =
                 with(itemView) {
                     if (taskModel.taskTitle.isNullOrEmpty()) {
                         tv_title.setGone()
@@ -45,7 +45,7 @@ class TasksTableAdapter(private val listener: (TaskRoomModel) -> Unit) :
                     tv_status.text = taskModel.taskStatusEnum.text
                     tv_created_time.text = taskModel.taskCreatedTime.roomModelTimeToString()
 
-                    setOnClickListener { listener(taskModel) }
+                    setOnClickListener { listener(taskModel, this) }
                 }
     }
 }
