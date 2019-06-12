@@ -20,4 +20,5 @@
     <string name="delete_note_dialog_title">Delete note</string>
     <string name="db_item_transition_name">db_item_transition_name</string>
     <string name="toolbar_transition_name">toolbar_transition_name</string>
+    <string name="some_action">Some action</string>
 </resources>

@@ -5,6 +5,7 @@ import android.content.Intent
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.widget.Toolbar
 import com.example.contentprovider.R
 import com.example.contentprovider.room.notesTable.NoteRoomModel
 import com.example.contentprovider.ui.dialog.OkCancelDialog
@@ -15,23 +16,20 @@ import com.example.contentprovider.utils.setVisible
 import kotlinx.android.synthetic.main.activity_add_note.*
 
 class AddNoteActivity : BaseActivity<AddNoteContract.Presenter, AddNoteContract.View>(),
-        AddNoteContract.View, View.OnClickListener {
+        AddNoteContract.View, View.OnClickListener, Toolbar.OnMenuItemClickListener {
 
     override val view = this
     override fun createPresenter() = AddNotePresenter()
     override fun getLayoutId() = R.layout.activity_add_note
 
-    private lateinit var toolbarDeleteIc: MenuItem
-
     override fun initData() {
-        prepareActionBar()
         getPresenterRoomModel()
+        prepareActionBars()
         initListeners()
     }
 
     private fun initListeners() {
         fab_add_note.setOnClickListener(this)
-        iv_arrow_right_add_note.setOnClickListener(this)
     }
 
     private fun getPresenterRoomModel() {
@@ -39,26 +37,49 @@ class AddNoteActivity : BaseActivity<AddNoteContract.Presenter, AddNoteContract.
         presenter.setRoomModel(noteModel)
     }
 
-    private fun prepareActionBar() {
-        setSupportActionBar(bottomAppBar_add_note)
+    private fun prepareActionBars() {
+        // bottom toolbar
+        bottomAppBar_add_note.setOnMenuItemClickListener(this)
+        presenter.checkDeleteIcon()
+
+        //top toolbar
+        setSupportActionBar(toolbar_add_note)
+        supportActionBar?.run {
+            setDisplayShowTitleEnabled(false)
+            setDisplayHomeAsUpEnabled(true)
+        }
     }
 
+    /**
+     * top toolbar
+     */
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_add_item_activity, menu)
-        toolbarDeleteIc = menu.findItem(R.id.action_delete)
-        presenter.checkDeleteIcon()
+        menuInflater.inflate(R.menu.menu_top_add_item_activity, menu)
         return true
     }
 
     override fun enableDeleteBtn() {
-        toolbarDeleteIc.setVisible()
+        bottomAppBar_add_note.replaceMenu(R.menu.menu_bottom_add_item_activity)
     }
 
+    /**
+     * top toolbar
+     */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.action_delete -> showDeleteDialog()
+            16908332 -> onBackPressed()
         }
 
+        return true
+    }
+
+    /**
+     * bottom toolbar
+     */
+    override fun onMenuItemClick(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            R.id.action_delete -> showDeleteDialog()
+        }
         return true
     }
 
@@ -79,7 +100,6 @@ class AddNoteActivity : BaseActivity<AddNoteContract.Presenter, AddNoteContract.
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.fab_add_note -> onSaveBtnClicked()
-            R.id.iv_arrow_right_add_note -> onBackPressed()
         }
     }
 

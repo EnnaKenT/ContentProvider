@@ -6,6 +6,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.ArrayAdapter
+import androidx.appcompat.widget.Toolbar
 import com.example.contentprovider.R
 import com.example.contentprovider.room.converters.TaskStatusEnum
 import com.example.contentprovider.room.tasksTable.TaskRoomModel
@@ -17,25 +18,23 @@ import com.example.contentprovider.utils.setVisible
 import kotlinx.android.synthetic.main.activity_add_task.*
 
 class AddTaskActivity : BaseActivity<AddTaskContract.Presenter, AddTaskContract.View>(),
-        AddTaskContract.View, View.OnClickListener {
+        AddTaskContract.View, View.OnClickListener, Toolbar.OnMenuItemClickListener {
 
     override val view = this
     override fun createPresenter() = AddTaskPresenter()
     override fun getLayoutId() = R.layout.activity_add_task
 
     private val spinnerData = TaskStatusEnum.values().map { it.text }
-    private lateinit var toolbarDeleteIc: MenuItem
 
     override fun initData() {
-        prepareActionBar()
-        prepareSpinner()
         getPresenterRoomModel()
+        prepareActionBars()
+        prepareSpinner()
         initListeners()
     }
 
     private fun initListeners() {
         fab_add_task.setOnClickListener(this)
-        iv_arrow_right_add_task.setOnClickListener(this)
     }
 
     private fun prepareSpinner() {
@@ -44,18 +43,45 @@ class AddTaskActivity : BaseActivity<AddTaskContract.Presenter, AddTaskContract.
         spinner_task.adapter = adapter
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_add_item_activity, menu)
-        toolbarDeleteIc = menu.findItem(R.id.action_delete)
+    private fun prepareActionBars() {
+        // bottom toolbar
+        bottomAppBar_add_task.setOnMenuItemClickListener(this)
         presenter.checkDeleteIcon()
+
+        //top toolbar
+        setSupportActionBar(toolbar_add_task)
+        supportActionBar?.run {
+            setDisplayShowTitleEnabled(false)
+            setDisplayHomeAsUpEnabled(true)
+        }
+    }
+
+    /**
+     * top toolbar
+     */
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_top_add_item_activity, menu)
         return true
     }
 
+    /**
+     * top toolbar
+     */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.action_delete -> showDeleteDialog()
+            16908332 -> onBackPressed()
         }
 
+        return true
+    }
+
+    /**
+     * bottom toolbar
+     */
+    override fun onMenuItemClick(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            R.id.action_delete -> showDeleteDialog()
+        }
         return true
     }
 
@@ -96,21 +122,16 @@ class AddTaskActivity : BaseActivity<AddTaskContract.Presenter, AddTaskContract.
     }
 
     override fun enableDeleteBtn() {
-        toolbarDeleteIc.setVisible()
+        bottomAppBar_add_task.replaceMenu(R.menu.menu_bottom_add_item_activity)
     }
 
     override fun setStatusEnum(taskStatusEnum: TaskStatusEnum) {
         spinner_task.setSelection(TaskStatusEnum.values().indexOf(taskStatusEnum))
     }
 
-    private fun prepareActionBar() {
-        setSupportActionBar(bottomAppBar_add_task)
-    }
-
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.fab_add_task -> onSaveBtnClicked()
-            R.id.iv_arrow_right_add_task -> onBackPressed()
         }
     }
 
