@@ -26,7 +26,12 @@ class AddNoteActivity : BaseActivity<AddNoteContract.Presenter, AddNoteContract.
     override fun initData() {
         prepareActionBar()
         getPresenterRoomModel()
-        mbtn_save_add_note.setOnClickListener(this)
+        initListeners()
+    }
+
+    private fun initListeners() {
+        fab_add_note.setOnClickListener(this)
+        iv_arrow_right_add_note.setOnClickListener(this)
     }
 
     private fun getPresenterRoomModel() {
@@ -35,12 +40,7 @@ class AddNoteActivity : BaseActivity<AddNoteContract.Presenter, AddNoteContract.
     }
 
     private fun prepareActionBar() {
-        setSupportActionBar(toolbar_add_note)
-
-        supportActionBar?.run {
-            title = getString(R.string.note)
-            setDisplayHomeAsUpEnabled(true)
-        }
+        setSupportActionBar(bottomAppBar_add_note)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -57,7 +57,6 @@ class AddNoteActivity : BaseActivity<AddNoteContract.Presenter, AddNoteContract.
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_delete -> showDeleteDialog()
-            16908332 -> onBackPressed() //back arrow id
         }
 
         return true
@@ -79,7 +78,8 @@ class AddNoteActivity : BaseActivity<AddNoteContract.Presenter, AddNoteContract.
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.mbtn_save_add_note -> onSaveBtnClicked()
+            R.id.fab_add_note -> onSaveBtnClicked()
+            R.id.iv_arrow_right_add_note -> onBackPressed()
         }
     }
 

@@ -72,7 +72,7 @@ class MainActivity : BaseActivity<MainContract.Presenter, MainContract.View>(), 
     private fun startTaskActivity() {
         val intent = AddTaskActivity.getIntent(this)
 
-        val transitionName = getString(R.string.toolbar_transition_name)
+        val transitionName = getString(R.string.db_item_transition_name)
 
         val transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation(this, bottomAppBar, transitionName)
         startActivity(intent, transitionActivityOptions.toBundle())
@@ -82,7 +82,7 @@ class MainActivity : BaseActivity<MainContract.Presenter, MainContract.View>(), 
     private fun startNoteActivity() {
         val intent = AddNoteActivity.getIntent(this)
 
-        val transitionName = getString(R.string.toolbar_transition_name)
+        val transitionName = getString(R.string.db_item_transition_name)
 
         val transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation(this, bottomAppBar, transitionName)
         startActivity(intent, transitionActivityOptions.toBundle())

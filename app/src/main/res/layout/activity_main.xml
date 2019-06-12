@@ -49,7 +49,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:transitionName="@string/toolbar_transition_name"
+        android:transitionName="@string/db_item_transition_name"
         app:backgroundTint="@color/primaryColor"
         app:fabAlignmentMode="center"
         app:hideOnScroll="true"

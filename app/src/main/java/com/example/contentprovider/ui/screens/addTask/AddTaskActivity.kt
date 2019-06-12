@@ -30,7 +30,12 @@ class AddTaskActivity : BaseActivity<AddTaskContract.Presenter, AddTaskContract.
         prepareActionBar()
         prepareSpinner()
         getPresenterRoomModel()
-        mbtn_save_add_task.setOnClickListener(this)
+        initListeners()
+    }
+
+    private fun initListeners() {
+        fab_add_task.setOnClickListener(this)
+        iv_arrow_right_add_task.setOnClickListener(this)
     }
 
     private fun prepareSpinner() {
@@ -99,17 +104,13 @@ class AddTaskActivity : BaseActivity<AddTaskContract.Presenter, AddTaskContract.
     }
 
     private fun prepareActionBar() {
-        setSupportActionBar(toolbar_add_task)
-
-        supportActionBar?.run {
-            title = getString(R.string.task)
-            setDisplayHomeAsUpEnabled(true)
-        }
+        setSupportActionBar(bottomAppBar_add_task)
     }
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.mbtn_save_add_task -> onSaveBtnClicked()
+            R.id.fab_add_task -> onSaveBtnClicked()
+            R.id.iv_arrow_right_add_task -> onBackPressed()
         }
     }
 
@@ -131,7 +132,6 @@ class AddTaskActivity : BaseActivity<AddTaskContract.Presenter, AddTaskContract.
     override fun taskSaved() {
         onBackPressed()
     }
-
 
     companion object {
 
