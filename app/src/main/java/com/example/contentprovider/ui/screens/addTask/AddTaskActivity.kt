@@ -119,6 +119,7 @@ class AddTaskActivity : BaseActivity<AddTaskContract.Presenter, AddTaskContract.
     override fun setDescription(description: String) {
         et_description_add_task.setText(description)
         et_description_add_task.setSelection(description.length)
+        et_description_add_task.requestFocus()
     }
 
     override fun enableDeleteBtn() {

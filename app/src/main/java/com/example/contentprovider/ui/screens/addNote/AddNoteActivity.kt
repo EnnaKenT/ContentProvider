@@ -121,6 +121,7 @@ class AddNoteActivity : BaseActivity<AddNoteContract.Presenter, AddNoteContract.
     override fun setDescription(description: String) {
         et_description_add_note.setText(description)
         et_description_add_note.setSelection(description.length)
+        et_description_add_note.requestFocus()
     }
 
     private fun clearError() {
