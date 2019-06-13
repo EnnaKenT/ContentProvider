@@ -1,10 +1,10 @@
 package com.example.contentprovider.ui.screens.base.activity
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import com.example.contentprovider.ui.screens.base.BaseContract
+import com.example.contentprovider.utils.toast
 
 abstract class BaseActivity<T : BaseContract.BasePresenter<V>, V : BaseContract.BaseView> : AppCompatActivity(),
     BaseContract.BaseView {
@@ -58,10 +58,10 @@ abstract class BaseActivity<T : BaseContract.BasePresenter<V>, V : BaseContract.
     }
 
     override fun showError(text: String) {
-        Toast.makeText(this, text, Toast.LENGTH_LONG).show()
+        toast(text)
     }
 
     override fun showError(@StringRes stringRes: Int) {
-        Toast.makeText(this, getString(stringRes), Toast.LENGTH_LONG).show()
+        toast(stringRes)
     }
 }

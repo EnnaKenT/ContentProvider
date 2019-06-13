@@ -1,9 +1,12 @@
 package com.example.contentprovider.utils
 
+import android.content.Context
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
+import androidx.annotation.StringRes
 
 fun View.setGone() {
     if (visibility != View.GONE) {
@@ -44,3 +47,9 @@ fun MenuItem.setVisible() {
 fun View.setBackgroundTint(color: Int) {
     background?.current?.colorFilter = PorterDuffColorFilter(color, PorterDuff.Mode.MULTIPLY)
 }
+
+fun Context.toast(message: CharSequence) =
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+
+fun Context.toast(@StringRes stringRes: Int) =
+        Toast.makeText(this, stringRes, Toast.LENGTH_SHORT).show()

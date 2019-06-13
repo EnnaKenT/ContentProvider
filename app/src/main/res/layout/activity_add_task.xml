@@ -82,6 +82,8 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_action_done"
             app:backgroundTint="@color/primaryLightColor"
+            app:fabCradleMargin="@dimen/dimen_6dp"
+            app:fabCradleRoundedCornerRadius="@dimen/dimen_20dp"
             app:layout_anchor="@id/bottomAppBar_add_task" />
 
         <com.google.android.material.bottomappbar.BottomAppBar
@@ -89,7 +91,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:transitionName="@string/toolbar_transition_name"
             app:backgroundTint="@color/primaryColor"
             app:fabAlignmentMode="end" />
 
