@@ -12,7 +12,7 @@ import com.example.contentprovider.R
 import com.example.contentprovider.utils.setVisible
 import kotlinx.android.synthetic.main.dialog_ok_cancel.*
 
-class OkCancelDialog(private val leftBtnClickListener: () -> Unit) : DialogFragment() {
+class SearchAutocompleteDialog(private val leftBtnClickListener: () -> Unit) : DialogFragment() {
 
     @SuppressLint("InflateParams")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -60,8 +60,8 @@ class OkCancelDialog(private val leftBtnClickListener: () -> Unit) : DialogFragm
         private const val ARG_TITLE: String = "title"
         private const val ARG_MESSAGE: String = "message"
 
-        fun newInstance(title: String, message: String, leftBtnClickListener: () -> Unit): OkCancelDialog {
-            val dialog = OkCancelDialog(leftBtnClickListener)
+        fun newInstance(title: String, message: String, leftBtnClickListener: () -> Unit): SearchAutocompleteDialog {
+            val dialog = SearchAutocompleteDialog(leftBtnClickListener)
             val bundle = Bundle()
             bundle.putString(ARG_TITLE, title)
             bundle.putString(ARG_MESSAGE, message)

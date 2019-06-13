@@ -16,7 +16,7 @@ import com.example.contentprovider.utils.setVisible
 import kotlinx.android.synthetic.main.activity_add_note.*
 
 class AddNoteActivity : BaseActivity<AddNoteContract.Presenter, AddNoteContract.View>(),
-        AddNoteContract.View, View.OnClickListener, Toolbar.OnMenuItemClickListener {
+        AddNoteContract.View, View.OnClickListener, Toolbar.OnMenuItemClickListener, () -> Unit {
 
     override val view = this
     override fun createPresenter() = AddNotePresenter()
@@ -86,15 +86,15 @@ class AddNoteActivity : BaseActivity<AddNoteContract.Presenter, AddNoteContract.
     private fun showDeleteDialog() {
         val dialog: OkCancelDialog = OkCancelDialog.newInstance(
                 getString(R.string.delete_task_dialog_title),
-                getString(R.string.delete_note_dialog_msg)
+                getString(R.string.delete_note_dialog_msg),
+                this
         )
 
-        dialog.setLeftBtnListener(object : OkCancelDialog.OnLeftBtnClickListener {
-            override fun btnClicked() {
-                presenter.deleteItemFromDb()
-            }
-        })
         dialog.show(supportFragmentManager)
+    }
+
+    override fun invoke() {
+        presenter.deleteItemFromDb()
     }
 
     override fun onClick(v: View?) {

@@ -18,7 +18,7 @@ import com.example.contentprovider.utils.setVisible
 import kotlinx.android.synthetic.main.activity_add_task.*
 
 class AddTaskActivity : BaseActivity<AddTaskContract.Presenter, AddTaskContract.View>(),
-        AddTaskContract.View, View.OnClickListener, Toolbar.OnMenuItemClickListener {
+        AddTaskContract.View, View.OnClickListener, Toolbar.OnMenuItemClickListener, () -> Unit {
 
     override val view = this
     override fun createPresenter() = AddTaskPresenter()
@@ -88,15 +88,15 @@ class AddTaskActivity : BaseActivity<AddTaskContract.Presenter, AddTaskContract.
     private fun showDeleteDialog() {
         val dialog: OkCancelDialog = OkCancelDialog.newInstance(
                 getString(R.string.delete_task_dialog_title),
-                getString(R.string.delete_task_dialog_msg)
+                getString(R.string.delete_task_dialog_msg),
+                this
         )
 
-        dialog.setLeftBtnListener(object : OkCancelDialog.OnLeftBtnClickListener {
-            override fun btnClicked() {
-                presenter.deleteItemFromDb()
-            }
-        })
         dialog.show(supportFragmentManager)
+    }
+
+    override fun invoke() {
+        presenter.deleteItemFromDb()
     }
 
     override fun showProgressBar() {
