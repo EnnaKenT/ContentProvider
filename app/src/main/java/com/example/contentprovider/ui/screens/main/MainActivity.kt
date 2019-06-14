@@ -1,10 +1,12 @@
 package com.example.contentprovider.ui.screens.main
 
 import android.app.ActivityOptions
+import android.app.SearchManager
+import android.content.Context
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
+import android.widget.SearchView
 import com.example.contentprovider.R
 import com.example.contentprovider.ui.screens.addNote.AddNoteActivity
 import com.example.contentprovider.ui.screens.addTask.AddTaskActivity
@@ -14,7 +16,7 @@ import com.example.contentprovider.ui.screens.main.adapter.TableTypeEnum
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity<MainContract.Presenter, MainContract.View>(), MainContract.View,
-        View.OnClickListener {
+    View.OnClickListener {
 
     private lateinit var fragmentPagerAdapter: TableFragmentPagerAdapter
 
@@ -46,6 +48,13 @@ class MainActivity : BaseActivity<MainContract.Presenter, MainContract.View>(), 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_bottom_bar, menu)
+
+        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        val searchView = menu.findItem(R.id.action_search).actionView as SearchView
+        // Tells your app's SearchView to use this activity's searchable configuration
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
+        searchView.isIconifiedByDefault = false // Do not iconify the widget; expand it by default
+
         return true
     }
 
@@ -95,7 +104,10 @@ class MainActivity : BaseActivity<MainContract.Presenter, MainContract.View>(), 
         // as you specify a parent activity in AndroidManifest.xml.
 
         when (item.itemId) {
-            R.id.action_search -> Toast.makeText(this, getString(R.string.action_search), Toast.LENGTH_SHORT).show()
+            R.id.action_search -> {
+                super.onSearchRequested()
+//                toast(R.string.action_search)
+            }
         }
 
         return true

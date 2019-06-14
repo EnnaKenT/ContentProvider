@@ -1,22 +1,32 @@
 package com.example.contentprovider.provider
 
+import android.app.SearchManager
 import android.content.ContentProvider
-import android.content.ContentUris
 import android.content.ContentValues
 import android.content.UriMatcher
 import android.database.Cursor
+import android.database.MatrixCursor
 import android.net.Uri
-import com.example.contentprovider.BuildConfig
-import com.example.contentprovider.room.AppDatabase
+import android.provider.BaseColumns
 import com.example.contentprovider.room.notesTable.NoteRoomModel
 import com.example.contentprovider.room.tasksTable.TaskRoomModel
+
 
 class MyContentProvider : ContentProvider() {
 
     companion object {
 
         /** The authority of this content provider.  */
-        const val AUTHORITY = BuildConfig.PROVIDER_AUTHORITY
+        const val AUTHORITY = "com.example.contentprovider.provider"
+
+        private val SEARCH = SearchManager.SUGGEST_URI_PATH_QUERY + "/*"
+
+        private val SEARCH_SUGGEST_COLUMNS = arrayOf(
+            BaseColumns._ID,
+            SearchManager.SUGGEST_COLUMN_TEXT_1,
+            SearchManager.SUGGEST_COLUMN_TEXT_2,
+            SearchManager.SUGGEST_COLUMN_INTENT_DATA_ID
+        )
 
         /** The URI for the Notes table.  */
         val URI_NOTES = Uri.parse("content://" + AUTHORITY + "/" + NoteRoomModel.TABLE_NAME)
@@ -36,10 +46,11 @@ class MyContentProvider : ContentProvider() {
         private val MATCHER = UriMatcher(UriMatcher.NO_MATCH)
 
         init {
-            MATCHER.addURI(AUTHORITY, NoteRoomModel.TABLE_NAME, CODE_NOTES_DIR)
-            MATCHER.addURI(AUTHORITY, NoteRoomModel.TABLE_NAME + "/*", CODE_NOTES_ITEM)
-            MATCHER.addURI(AUTHORITY, TaskRoomModel.TABLE_NAME, CODE_TASKS_DIR)
-            MATCHER.addURI(AUTHORITY, TaskRoomModel.TABLE_NAME + "/*", CODE_TASKS_ITEM)
+//            MATCHER.addURI(AUTHORITY, NoteRoomModel.TABLE_NAME, CODE_NOTES_DIR)
+//            MATCHER.addURI(AUTHORITY, NoteRoomModel.TABLE_NAME + "/*", CODE_NOTES_ITEM)
+//            MATCHER.addURI(AUTHORITY, TaskRoomModel.TABLE_NAME, CODE_TASKS_DIR)
+//            MATCHER.addURI(AUTHORITY, TaskRoomModel.TABLE_NAME + "/*", CODE_TASKS_ITEM)
+            MATCHER.addURI(AUTHORITY, SEARCH, 1)
         }
 
     }
@@ -53,7 +64,18 @@ class MyContentProvider : ContentProvider() {
         sortOrder: String?
     ): Cursor? {
         val code = MATCHER.match(uri)
+        if (code == 1) {
+            val query = uri.lastPathSegment?.toLowerCase()
+            val cursor = MatrixCursor(SEARCH_SUGGEST_COLUMNS, 1)
+            cursor.addRow(arrayOf("1", "Search Result", "Search Result Description", "content_id"))
+            cursor.addRow(arrayOf("2", "Search Result", "Search Result Description", "content_id"))
+            cursor.addRow(arrayOf("3", "хаха", "хохохо", "content_id"))
+            return cursor
+        }
+        return null
+    }
 
+    /*
         if (code == CODE_NOTES_DIR || code == CODE_NOTES_ITEM) {
             context?.run {
                 val notes = AppDatabase.initAppDataBase(this)?.noteRoomDao()
@@ -82,6 +104,7 @@ class MyContentProvider : ContentProvider() {
             throw IllegalArgumentException("Unknown URI: $uri")
         }
     }
+    */
 
     override fun getType(uri: Uri): String? {
         return when (MATCHER.match(uri)) {
@@ -97,6 +120,7 @@ class MyContentProvider : ContentProvider() {
      * not permitted yet in manifest
      */
     override fun insert(uri: Uri, values: ContentValues?): Uri? {
+        /*
         when (MATCHER.match(uri)) {
             CODE_NOTES_DIR -> {
                 if (values == null || context == null) {
@@ -122,6 +146,8 @@ class MyContentProvider : ContentProvider() {
             CODE_TASKS_ITEM -> throw IllegalArgumentException("Invalid URI, cannot insert with ID: $uri")
             else -> throw IllegalArgumentException("Unknown URI: $uri")
         }
+        */
+        throw UnsupportedOperationException()
     }
 
     /**
@@ -155,7 +181,7 @@ class MyContentProvider : ContentProvider() {
             else -> throw IllegalArgumentException("Unknown URI: $uri")
         }
         */
-        return 0
+        throw UnsupportedOperationException()
     }
 
     /**
@@ -166,6 +192,7 @@ class MyContentProvider : ContentProvider() {
         selection: String?,
         selectionArgs: Array<String>?
     ): Int {
+        /*
         when (MATCHER.match(uri)) {
             CODE_NOTES_DIR -> throw IllegalArgumentException("Invalid URI, cannot update without ID$uri")
             CODE_NOTES_ITEM -> {
@@ -207,5 +234,7 @@ class MyContentProvider : ContentProvider() {
             }
             else -> throw IllegalArgumentException("Unknown URI: $uri")
         }
+        */
+        throw UnsupportedOperationException()
     }
 }

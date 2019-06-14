@@ -4,11 +4,11 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
     defaultConfig {
         applicationId "com.example.contentprovider"
-        minSdkVersion 21
-        targetSdkVersion 28
+        minSdkVersion 24
+        targetSdkVersion 29
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -18,13 +18,6 @@ android {
                 arg("room.schemaLocation", "$projectDir/schemas".toString())
             }
         }
-
-        def addConstant = {constantName, constantValue ->
-            manifestPlaceholders += [ (constantName):constantValue]
-            buildConfigField "String", "${constantName}", "\"${constantValue}\""
-        }
-
-        addConstant("PROVIDER_AUTHORITY", "com.example.contentprovider.provider")
     }
     buildTypes {
         release {
@@ -39,13 +32,13 @@ androidExtensions {
 }
 
 dependencies {
-    def room_version = "2.1.0-rc01"
+    def room_version = "2.1.0"
     def constraintLayoutVersion = '2.0.0-beta1'
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.1.0-beta01'
-    implementation 'androidx.core:core-ktx:1.2.0-alpha01'
+    implementation 'androidx.core:core-ktx:1.2.0-alpha02'
     implementation 'com.google.android.material:material:1.1.0-alpha07'
     implementation "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
     testImplementation 'junit:junit:4.13-beta-2'

@@ -2,6 +2,7 @@ package com.example.contentprovider.room.tasksTable
 
 import android.content.ContentValues
 import android.os.Parcelable
+import android.provider.BaseColumns
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -28,7 +29,7 @@ data class TaskRoomModel(
 
     companion object {
         const val TABLE_NAME = "tasks"
-        const val COLUMN_ID = "id"
+        const val COLUMN_ID = BaseColumns._ID
         const val COLUMN_TITLE = "title"
         const val COLUMN_DESCRIPTION = "description"
         const val COLUMN_CREATED_TIME = "created_time"

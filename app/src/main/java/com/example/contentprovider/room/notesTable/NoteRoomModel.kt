@@ -2,6 +2,7 @@ package com.example.contentprovider.room.notesTable
 
 import android.content.ContentValues
 import android.os.Parcelable
+import android.provider.BaseColumns
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -22,7 +23,7 @@ data class NoteRoomModel(
 
     companion object {
         const val TABLE_NAME = "notes"
-        const val COLUMN_ID = "id"
+        const val COLUMN_ID = BaseColumns._ID
         const val COLUMN_TITLE = "title"
         const val COLUMN_DESCRIPTION = "description"
 
