@@ -11,7 +11,7 @@ class NotesFragmentPresenter : BasePresenter<TableFragmentContract.View<NoteRoom
 
     override fun prepareDatabaseModels() {
         launch {
-            view?.showDatabaseModels(AppDatabase.initAppDataBase()?.noteRoomDao()?.getAllNotes())
+            view?.showDatabaseModels(AppDatabase.getAppDataBase()?.noteRoomDao()?.getAllNotes())
         }
     }
 

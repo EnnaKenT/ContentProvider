@@ -19,15 +19,15 @@ class AddTaskPresenter : BasePresenter<AddTaskContract.View>(), AddTaskContract.
     }
 
     private fun checkExistModel() {
-        taskModel?.taskTitle?.let { view?.setTitle(it) }
-        taskModel?.taskDescription?.let {
+        taskModel?.title?.let { view?.setTitle(it) }
+        taskModel?.description?.let {
             view?.setDescription(it)
         }
         taskModel?.taskStatusEnum?.let { view?.setStatusEnum(it) }
     }
 
     override fun checkDeleteIcon() {
-        taskModel?.taskDescription?.let {
+        taskModel?.description?.let {
             view?.enableDeleteBtn()
         }
     }
@@ -37,7 +37,7 @@ class AddTaskPresenter : BasePresenter<AddTaskContract.View>(), AddTaskContract.
             view?.showProgressBar()
 
             launch {
-                AppDatabase.initAppDataBase()?.taskRoomDao()?.deleteTask(it)
+                AppDatabase.getAppDataBase()?.taskRoomDao()?.deleteTask(it)
 
                 view?.hideProgressBar()
                 view?.taskSaved()
@@ -55,12 +55,12 @@ class AddTaskPresenter : BasePresenter<AddTaskContract.View>(), AddTaskContract.
                 taskModel?.id,
                 title.toString(),
                 description.toString(),
-                taskModel?.taskCreatedTime ?: Date(System.currentTimeMillis()),
+                taskModel?.createdTime ?: Date(System.currentTimeMillis()),
                 taskStatusEnum
         )
 
         launch {
-            AppDatabase.initAppDataBase()?.taskRoomDao()?.insertTask(newTaskModel)
+            AppDatabase.getAppDataBase()?.taskRoomDao()?.insertTask(newTaskModel)
             view?.hideProgressBar()
             view?.taskSaved()
         }

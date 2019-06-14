@@ -11,7 +11,7 @@ class TasksFragmentPresenter : BasePresenter<TableFragmentContract.View<TaskRoom
 
     override fun prepareDatabaseModels() {
         launch {
-            view?.showDatabaseModels(AppDatabase.initAppDataBase()?.taskRoomDao()?.getAllTasks())
+            view?.showDatabaseModels(AppDatabase.getAppDataBase()?.taskRoomDao()?.getAllTasks())
         }
     }
 

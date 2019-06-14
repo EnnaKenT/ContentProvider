@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "cb8e643f6c267c992115bc48f046f298",
+    "identityHash": "22872559c51e9093267115b53247238a",
     "entities": [
       {
-        "tableName": "task_room_table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `taskTitle` TEXT, `taskDescription` TEXT NOT NULL, `taskCreatedTime` INTEGER NOT NULL, `taskStatusEnum` INTEGER NOT NULL)",
+        "tableName": "tasks",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `title` TEXT, `description` TEXT NOT NULL, `created_time` INTEGER NOT NULL, `task_status` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -15,26 +15,26 @@
             "notNull": false
           },
           {
-            "fieldPath": "taskTitle",
-            "columnName": "taskTitle",
+            "fieldPath": "title",
+            "columnName": "title",
             "affinity": "TEXT",
             "notNull": false
           },
           {
-            "fieldPath": "taskDescription",
-            "columnName": "taskDescription",
+            "fieldPath": "description",
+            "columnName": "description",
             "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "taskCreatedTime",
-            "columnName": "taskCreatedTime",
+            "fieldPath": "createdTime",
+            "columnName": "created_time",
             "affinity": "INTEGER",
             "notNull": true
           },
           {
             "fieldPath": "taskStatusEnum",
-            "columnName": "taskStatusEnum",
+            "columnName": "task_status",
             "affinity": "INTEGER",
             "notNull": true
           }
@@ -49,8 +49,8 @@
         "foreignKeys": []
       },
       {
-        "tableName": "note_room_table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `noteTitle` TEXT, `noteDescription` TEXT NOT NULL)",
+        "tableName": "notes",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `title` TEXT, `description` TEXT NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -59,14 +59,14 @@
             "notNull": false
           },
           {
-            "fieldPath": "noteTitle",
-            "columnName": "noteTitle",
+            "fieldPath": "title",
+            "columnName": "title",
             "affinity": "TEXT",
             "notNull": false
           },
           {
-            "fieldPath": "noteDescription",
-            "columnName": "noteDescription",
+            "fieldPath": "description",
+            "columnName": "description",
             "affinity": "TEXT",
             "notNull": true
           }
@@ -84,7 +84,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"cb8e643f6c267c992115bc48f046f298\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '22872559c51e9093267115b53247238a')"
     ]
   }
 }

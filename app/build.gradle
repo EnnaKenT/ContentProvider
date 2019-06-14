@@ -18,6 +18,13 @@ android {
                 arg("room.schemaLocation", "$projectDir/schemas".toString())
             }
         }
+
+        def addConstant = {constantName, constantValue ->
+            manifestPlaceholders += [ (constantName):constantValue]
+            buildConfigField "String", "${constantName}", "\"${constantValue}\""
+        }
+
+        addConstant("PROVIDER_AUTHORITY", "com.example.contentprovider.provider")
     }
     buildTypes {
         release {

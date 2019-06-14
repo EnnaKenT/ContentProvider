@@ -30,8 +30,9 @@
             android:windowSoftInputMode="stateVisible|adjustPan" />
 
         <provider
-            android:name=".myContentProvider.MyContentProvider"
-            android:authorities="com.example.contentprovider.notesTasksProvider"
+            android:name=".provider.MyContentProvider"
+            android:authorities="${PROVIDER_AUTHORITY}"
+            android:exported="true"
             android:writePermission="com.example.contentprovider.WRITE" />
 
     </application>

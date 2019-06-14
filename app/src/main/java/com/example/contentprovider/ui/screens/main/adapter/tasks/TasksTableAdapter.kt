@@ -35,15 +35,15 @@ class TasksTableAdapter(private val listener: (TaskRoomModel, View) -> Unit) :
     inner class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(taskModel: TaskRoomModel, listener: (TaskRoomModel, View) -> Unit) =
                 with(itemView) {
-                    if (taskModel.taskTitle.isNullOrEmpty()) {
+                    if (taskModel.title.isNullOrEmpty()) {
                         tv_title.setGone()
                     } else {
-                        tv_title.text = taskModel.taskTitle
+                        tv_title.text = taskModel.title
                         tv_title.setVisible()
                     }
-                    tv_description.text = taskModel.taskDescription
+                    tv_description.text = taskModel.description
                     tv_status.text = taskModel.taskStatusEnum.text
-                    tv_created_time.text = taskModel.taskCreatedTime.roomModelTimeToString()
+                    tv_created_time.text = taskModel.createdTime.roomModelTimeToString()
 
                     setOnClickListener { listener(taskModel, this) }
                 }

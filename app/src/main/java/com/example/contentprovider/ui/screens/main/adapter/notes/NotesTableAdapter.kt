@@ -34,14 +34,14 @@ class NotesTableAdapter(private val listener: (NoteRoomModel, View) -> Unit) :
     inner class NotesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(noteModel: NoteRoomModel, listener: (NoteRoomModel, View) -> Unit) =
                 with(itemView) {
-                    if (noteModel.noteTitle.isNullOrEmpty()) {
+                    if (noteModel.title.isNullOrEmpty()) {
                         tv_title.setGone()
                     } else {
-                        tv_title.text = noteModel.noteTitle
+                        tv_title.text = noteModel.title
                         tv_title.setVisible()
                     }
 
-                    tv_description.text = noteModel.noteDescription
+                    tv_description.text = noteModel.description
 
                     setOnClickListener { listener(noteModel, this) }
                 }

@@ -15,14 +15,14 @@ class AddNotePresenter : BasePresenter<AddNoteContract.View>(), AddNoteContract.
     }
 
     private fun checkExistModel() {
-        noteModel?.noteTitle?.let { view?.setTitle(it) }
-        noteModel?.noteDescription?.let {
+        noteModel?.title?.let { view?.setTitle(it) }
+        noteModel?.description?.let {
             view?.setDescription(it)
         }
     }
 
     override fun checkDeleteIcon() {
-        noteModel?.noteDescription?.let {
+        noteModel?.description?.let {
             view?.enableDeleteBtn()
         }
     }
@@ -32,7 +32,7 @@ class AddNotePresenter : BasePresenter<AddNoteContract.View>(), AddNoteContract.
             view?.showProgressBar()
 
             launch {
-                AppDatabase.initAppDataBase()?.noteRoomDao()?.deleteNote(it)
+                AppDatabase.getAppDataBase()?.noteRoomDao()?.deleteNote(it)
 
                 view?.hideProgressBar()
                 view?.noteSaved()
@@ -52,7 +52,7 @@ class AddNotePresenter : BasePresenter<AddNoteContract.View>(), AddNoteContract.
         )
 
         launch {
-            AppDatabase.initAppDataBase()?.noteRoomDao()?.insertNote(newNoteModel)
+            AppDatabase.getAppDataBase()?.noteRoomDao()?.insertNote(newNoteModel)
             view?.hideProgressBar()
             view?.noteSaved()
         }

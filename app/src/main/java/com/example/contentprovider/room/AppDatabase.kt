@@ -22,7 +22,7 @@ abstract class AppDatabase : RoomDatabase() {
         private var INSTANCE: AppDatabase? = null
         private var DB_NAME: String = "content.provider.database"
 
-        fun initAppDataBase(context: Context) {
+        fun initAppDataBase(context: Context): AppDatabase? {
             if (INSTANCE == null) {
                 synchronized(AppDatabase::class) {
                     INSTANCE = Room
@@ -30,9 +30,10 @@ abstract class AppDatabase : RoomDatabase() {
                         .build()
                 }
             }
+            return INSTANCE
         }
 
-        fun initAppDataBase(): AppDatabase? {
+        fun getAppDataBase(): AppDatabase? {
             return INSTANCE
         }
 
