@@ -32,8 +32,8 @@ interface NoteRoomDao {
     @Delete
     suspend fun deleteNote(noteModel: NoteRoomModel)
 
-    @Delete
-    fun deleteNoteById(id: Long): Int
+//    @Delete
+//    fun deleteNoteById(id: Long): Int
 
     @Query("SELECT * FROM ${NoteRoomModel.TABLE_NAME} WHERE ${NoteRoomModel.COLUMN_TITLE} LIKE :noteTitle")
     suspend fun getNoteByTitle(noteTitle: String): MutableList<NoteRoomModel>

@@ -18,19 +18,19 @@ class MyContentProvider : ContentProvider() {
         /** The authority of this content provider.  */
         const val AUTHORITY = BuildConfig.PROVIDER_AUTHORITY
 
-        /** The URI for the Tasks table.  */
-        val URI_TASKS = Uri.parse("content://" + AUTHORITY + "/" + TaskRoomModel.TABLE_NAME)
-        /** The match code for some items in the Tasks table.  */
-        private const val CODE_TASKS_DIR = 3
-        /** The match code for an item in the Tasks table.  */
-        private const val CODE_TASKS_ITEM = 4
-
         /** The URI for the Notes table.  */
         val URI_NOTES = Uri.parse("content://" + AUTHORITY + "/" + NoteRoomModel.TABLE_NAME)
         /** The match code for some items in the Notes table.  */
         private const val CODE_NOTES_DIR = 1
         /** The match code for an item in the Notes table.  */
         private const val CODE_NOTES_ITEM = 2
+
+        /** The URI for the Tasks table.  */
+        val URI_TASKS = Uri.parse("content://" + AUTHORITY + "/" + TaskRoomModel.TABLE_NAME)
+        /** The match code for some items in the Tasks table.  */
+        private const val CODE_TASKS_DIR = 3
+        /** The match code for an item in the Tasks table.  */
+        private const val CODE_TASKS_ITEM = 4
 
         /** The URI matcher.  */
         private val MATCHER = UriMatcher(UriMatcher.NO_MATCH)
@@ -76,7 +76,6 @@ class MyContentProvider : ContentProvider() {
                 }
 
                 return cursor?.setNotificationUri(contentResolver, uri) as Cursor
-
             }
             return null
         } else {
@@ -129,6 +128,7 @@ class MyContentProvider : ContentProvider() {
      * not permitted yet in manifest
      */
     override fun delete(uri: Uri, selection: String?, selectionArgs: Array<String>?): Int {
+        /*
         when (MATCHER.match(uri)) {
             CODE_NOTES_DIR -> throw IllegalArgumentException("Invalid URI, cannot delete without ID$uri")
             CODE_NOTES_ITEM -> {
@@ -154,6 +154,8 @@ class MyContentProvider : ContentProvider() {
             }
             else -> throw IllegalArgumentException("Unknown URI: $uri")
         }
+        */
+        return 0
     }
 
     /**
