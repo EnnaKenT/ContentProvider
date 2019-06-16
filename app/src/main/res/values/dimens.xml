@@ -21,5 +21,7 @@
     <dimen name="rv_padding">@dimen/dimen_5dp</dimen>
     <dimen name="card_corner_radius">@dimen/dimen_8dp</dimen>
     <dimen name="card_width">@dimen/dimen_1dp</dimen>
-    
+
+    <dimen name="fabCradleVerticalOffsetSearch">35dp</dimen>
+
 </resources>

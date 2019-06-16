@@ -8,110 +8,62 @@ import android.database.Cursor
 import android.database.MatrixCursor
 import android.net.Uri
 import android.provider.BaseColumns
-import com.example.contentprovider.room.notesTable.NoteRoomModel
-import com.example.contentprovider.room.tasksTable.TaskRoomModel
-
+import com.example.contentprovider.BuildConfig
+import com.example.contentprovider.room.AppDatabase
 
 class MyContentProvider : ContentProvider() {
 
     companion object {
 
         /** The authority of this content provider.  */
-        const val AUTHORITY = "com.example.contentprovider.provider"
+        const val AUTHORITY = BuildConfig.PROVIDER_AUTHORITY_FIELD
 
-        private val SEARCH = SearchManager.SUGGEST_URI_PATH_QUERY + "/*"
+        private const val SEARCH = SearchManager.SUGGEST_URI_PATH_QUERY + "/*"
 
         private val SEARCH_SUGGEST_COLUMNS = arrayOf(
-            BaseColumns._ID,
-            SearchManager.SUGGEST_COLUMN_TEXT_1,
-            SearchManager.SUGGEST_COLUMN_TEXT_2,
-            SearchManager.SUGGEST_COLUMN_INTENT_DATA_ID
+                BaseColumns._ID,
+                SearchManager.SUGGEST_COLUMN_TEXT_1,
+                SearchManager.SUGGEST_COLUMN_TEXT_2
         )
-
-        /** The URI for the Notes table.  */
-        val URI_NOTES = Uri.parse("content://" + AUTHORITY + "/" + NoteRoomModel.TABLE_NAME)
-        /** The match code for some items in the Notes table.  */
-        private const val CODE_NOTES_DIR = 1
-        /** The match code for an item in the Notes table.  */
-        private const val CODE_NOTES_ITEM = 2
-
-        /** The URI for the Tasks table.  */
-        val URI_TASKS = Uri.parse("content://" + AUTHORITY + "/" + TaskRoomModel.TABLE_NAME)
-        /** The match code for some items in the Tasks table.  */
-        private const val CODE_TASKS_DIR = 3
-        /** The match code for an item in the Tasks table.  */
-        private const val CODE_TASKS_ITEM = 4
+        private const val SEARCH_CODE = 1
 
         /** The URI matcher.  */
         private val MATCHER = UriMatcher(UriMatcher.NO_MATCH)
 
         init {
-//            MATCHER.addURI(AUTHORITY, NoteRoomModel.TABLE_NAME, CODE_NOTES_DIR)
-//            MATCHER.addURI(AUTHORITY, NoteRoomModel.TABLE_NAME + "/*", CODE_NOTES_ITEM)
-//            MATCHER.addURI(AUTHORITY, TaskRoomModel.TABLE_NAME, CODE_TASKS_DIR)
-//            MATCHER.addURI(AUTHORITY, TaskRoomModel.TABLE_NAME + "/*", CODE_TASKS_ITEM)
-            MATCHER.addURI(AUTHORITY, SEARCH, 1)
+            MATCHER.addURI(AUTHORITY, SEARCH, SEARCH_CODE)
         }
-
     }
 
     override fun onCreate() = true
 
     override fun query(
-        uri: Uri, projection: Array<String>?,
-        selection: String?,
-        selectionArgs: Array<String>?,
-        sortOrder: String?
+            uri: Uri, projection: Array<String>?,
+            selection: String?,
+            selectionArgs: Array<String>?,
+            sortOrder: String?
     ): Cursor? {
         val code = MATCHER.match(uri)
-        if (code == 1) {
-            val query = uri.lastPathSegment?.toLowerCase()
+        if (code == SEARCH_CODE) {
             val cursor = MatrixCursor(SEARCH_SUGGEST_COLUMNS, 1)
-            cursor.addRow(arrayOf("1", "Search Result", "Search Result Description", "content_id"))
-            cursor.addRow(arrayOf("2", "Search Result", "Search Result Description", "content_id"))
-            cursor.addRow(arrayOf("3", "хаха", "хохохо", "content_id"))
+            val query = uri.lastPathSegment?.toLowerCase()
+
+            val notes = AppDatabase.initAppDataBase(context!!)?.noteRoomDao()?.getNoteByLetter(query!!)
+            val tasks = AppDatabase.initAppDataBase(context!!)?.taskRoomDao()?.getTasksByLetter(query!!)
+            if (!notes.isNullOrEmpty()) {
+                notes.forEach { cursor.addRow(arrayOf(it.id, it.title, it.description)) }
+            }
+            if (!tasks.isNullOrEmpty()) {
+                tasks.forEach { cursor.addRow(arrayOf(it.id, it.title, it.description)) }
+            }
             return cursor
         }
         return null
     }
 
-    /*
-        if (code == CODE_NOTES_DIR || code == CODE_NOTES_ITEM) {
-            context?.run {
-                val notes = AppDatabase.initAppDataBase(this)?.noteRoomDao()
-                val cursor = if (code == CODE_NOTES_DIR) {
-                    notes?.getAllNotesAsCursor()
-                } else {
-                    notes?.getNoteByIdAsCursor(ContentUris.parseId(uri))
-                }
-
-                return cursor?.setNotificationUri(contentResolver, uri) as Cursor
-            }
-            return null
-        } else if (code == CODE_TASKS_DIR || code == CODE_TASKS_ITEM) {
-            context?.run {
-                val tasks = AppDatabase.initAppDataBase(this)?.taskRoomDao()
-                val cursor = if (code == CODE_TASKS_DIR) {
-                    tasks?.getAllTasksAsCursor()
-                } else {
-                    tasks?.getTaskByIdAsCursor(ContentUris.parseId(uri))
-                }
-
-                return cursor?.setNotificationUri(contentResolver, uri) as Cursor
-            }
-            return null
-        } else {
-            throw IllegalArgumentException("Unknown URI: $uri")
-        }
-    }
-    */
-
     override fun getType(uri: Uri): String? {
         return when (MATCHER.match(uri)) {
-            CODE_NOTES_DIR -> "vnd.android.cursor.dir/$AUTHORITY.${NoteRoomModel.TABLE_NAME}"
-            CODE_NOTES_ITEM -> "vnd.android.cursor.item/$AUTHORITY.${NoteRoomModel.TABLE_NAME}"
-            CODE_TASKS_DIR -> "vnd.android.cursor.dir/$AUTHORITY.${TaskRoomModel.TABLE_NAME}"
-            CODE_TASKS_ITEM -> "vnd.android.cursor.item/$AUTHORITY.${TaskRoomModel.TABLE_NAME}"
+            1 -> "vnd.android.cursor.item/$AUTHORITY.$SEARCH"
             else -> throw IllegalArgumentException("Unknown URI: $uri")
         }
     }
@@ -120,33 +72,6 @@ class MyContentProvider : ContentProvider() {
      * not permitted yet in manifest
      */
     override fun insert(uri: Uri, values: ContentValues?): Uri? {
-        /*
-        when (MATCHER.match(uri)) {
-            CODE_NOTES_DIR -> {
-                if (values == null || context == null) {
-                    return null
-                }
-                val newNote = NoteRoomModel.fromContentValues(values) ?: return null
-                val id = AppDatabase.initAppDataBase(context!!)?.noteRoomDao()?.insertNoteFromProvider(newNote)
-                    ?: return null
-                context!!.contentResolver.notifyChange(uri, null)
-                return ContentUris.withAppendedId(uri, id)
-            }
-            CODE_NOTES_ITEM -> throw IllegalArgumentException("Invalid URI, cannot insert with ID: $uri")
-            CODE_TASKS_DIR -> {
-                if (values == null || context == null) {
-                    return null
-                }
-                val newTask = TaskRoomModel.fromContentValues(values) ?: return null
-                val id = AppDatabase.initAppDataBase(context!!)?.taskRoomDao()?.insertTaskFromProvider(newTask)
-                    ?: return null
-                context!!.contentResolver.notifyChange(uri, null)
-                return ContentUris.withAppendedId(uri, id)
-            }
-            CODE_TASKS_ITEM -> throw IllegalArgumentException("Invalid URI, cannot insert with ID: $uri")
-            else -> throw IllegalArgumentException("Unknown URI: $uri")
-        }
-        */
         throw UnsupportedOperationException()
     }
 
@@ -154,33 +79,6 @@ class MyContentProvider : ContentProvider() {
      * not permitted yet in manifest
      */
     override fun delete(uri: Uri, selection: String?, selectionArgs: Array<String>?): Int {
-        /*
-        when (MATCHER.match(uri)) {
-            CODE_NOTES_DIR -> throw IllegalArgumentException("Invalid URI, cannot delete without ID$uri")
-            CODE_NOTES_ITEM -> {
-                if (context == null) {
-                    return 0
-                }
-
-                val count =
-                    AppDatabase.initAppDataBase(context!!)?.noteRoomDao()?.deleteNoteById(ContentUris.parseId(uri))
-                context!!.contentResolver.notifyChange(uri, null)
-                return count ?: 0
-            }
-            CODE_TASKS_DIR -> throw IllegalArgumentException("Invalid URI, cannot delete without ID$uri")
-            CODE_TASKS_ITEM -> {
-                if (context == null) {
-                    return 0
-                }
-
-                val count =
-                    AppDatabase.initAppDataBase(context!!)?.taskRoomDao()?.deleteTaskById(ContentUris.parseId(uri))
-                context!!.contentResolver.notifyChange(uri, null)
-                return count ?: 0
-            }
-            else -> throw IllegalArgumentException("Unknown URI: $uri")
-        }
-        */
         throw UnsupportedOperationException()
     }
 
@@ -188,53 +86,10 @@ class MyContentProvider : ContentProvider() {
      * not permitted yet in manifest
      */
     override fun update(
-        uri: Uri, values: ContentValues?,
-        selection: String?,
-        selectionArgs: Array<String>?
+            uri: Uri, values: ContentValues?,
+            selection: String?,
+            selectionArgs: Array<String>?
     ): Int {
-        /*
-        when (MATCHER.match(uri)) {
-            CODE_NOTES_DIR -> throw IllegalArgumentException("Invalid URI, cannot update without ID$uri")
-            CODE_NOTES_ITEM -> {
-                if (context == null || values == null) {
-                    return 0
-                }
-
-                val note = NoteRoomModel.fromContentValues(values)
-                if (note?.description == null) {
-                    return 0
-                }
-                val newNote = NoteRoomModel(ContentUris.parseId(uri), note.title, note.description)
-
-                val count = AppDatabase.initAppDataBase(context!!)?.noteRoomDao()?.updateNoteFromProvider(newNote)
-                context!!.contentResolver.notifyChange(uri, null)
-                return count ?: 0
-            }
-            CODE_TASKS_DIR -> throw IllegalArgumentException("Invalid URI, cannot update without ID$uri")
-            CODE_TASKS_ITEM -> {
-                if (context == null || values == null) {
-                    return 0
-                }
-
-                val task = TaskRoomModel.fromContentValues(values)
-                if (task?.description == null) {
-                    return 0
-                }
-                val newTask = TaskRoomModel(
-                    ContentUris.parseId(uri),
-                    task.title,
-                    task.description,
-                    task.createdTime,
-                    task.taskStatusEnum
-                )
-
-                val count = AppDatabase.initAppDataBase(context!!)?.taskRoomDao()?.updateTaskFromProvider(newTask)
-                context!!.contentResolver.notifyChange(uri, null)
-                return count ?: 0
-            }
-            else -> throw IllegalArgumentException("Unknown URI: $uri")
-        }
-        */
         throw UnsupportedOperationException()
     }
 }

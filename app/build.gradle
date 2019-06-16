@@ -18,6 +18,8 @@ android {
                 arg("room.schemaLocation", "$projectDir/schemas".toString())
             }
         }
+        resValue "string", "PROVIDER_AUTHORITY_VALUE", "com.example.contentprovider.provider"
+        buildConfigField "String", "PROVIDER_AUTHORITY_FIELD", '"com.example.contentprovider.provider"'
     }
     buildTypes {
         release {

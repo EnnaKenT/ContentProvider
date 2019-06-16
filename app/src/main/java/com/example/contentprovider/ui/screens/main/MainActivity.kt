@@ -13,10 +13,12 @@ import com.example.contentprovider.ui.screens.addTask.AddTaskActivity
 import com.example.contentprovider.ui.screens.base.activity.BaseActivity
 import com.example.contentprovider.ui.screens.main.adapter.TableFragmentPagerAdapter
 import com.example.contentprovider.ui.screens.main.adapter.TableTypeEnum
+import com.example.contentprovider.utils.hideKeyboard
 import kotlinx.android.synthetic.main.activity_main.*
 
+
 class MainActivity : BaseActivity<MainContract.Presenter, MainContract.View>(), MainContract.View,
-    View.OnClickListener {
+        View.OnClickListener {
 
     private lateinit var fragmentPagerAdapter: TableFragmentPagerAdapter
 
@@ -49,20 +51,34 @@ class MainActivity : BaseActivity<MainContract.Presenter, MainContract.View>(), 
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_bottom_bar, menu)
 
-        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
-        val searchView = menu.findItem(R.id.action_search).actionView as SearchView
-        // Tells your app's SearchView to use this activity's searchable configuration
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
-        searchView.isIconifiedByDefault = false // Do not iconify the widget; expand it by default
+        menu.findItem(R.id.action_search).run {
+            setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
+                override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
+                    bottomAppBar.cradleVerticalOffset = resources.getDimension(R.dimen.fabCradleVerticalOffsetSearch)
+                    return true
+                }
+
+                override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
+                    hideKeyboard()
+                    bottomAppBar.cradleVerticalOffset = 0f
+                    return true
+                }
+            })
+            (actionView as SearchView).run {
+                val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+                // Tells your app's SearchView to use this activity's searchable configuration
+                setSearchableInfo(searchManager.getSearchableInfo(componentName))
+                isIconifiedByDefault = false // Do not iconify the widget; expand it by default
+            }
+        }
+
 
         return true
     }
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.fab -> {
-                onPlusClicked()
-            }
+            R.id.fab -> onPlusClicked()
         }
     }
 
@@ -105,7 +121,6 @@ class MainActivity : BaseActivity<MainContract.Presenter, MainContract.View>(), 
 
         when (item.itemId) {
             R.id.action_search -> {
-                super.onSearchRequested()
 //                toast(R.string.action_search)
             }
         }

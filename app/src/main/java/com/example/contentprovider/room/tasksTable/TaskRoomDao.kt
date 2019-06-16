@@ -1,6 +1,5 @@
 package com.example.contentprovider.room.tasksTable
 
-import android.database.Cursor
 import androidx.room.*
 import com.example.contentprovider.room.converters.TaskStatusEnum
 import java.util.*
@@ -11,11 +10,10 @@ interface TaskRoomDao {
     @Query("SELECT * FROM ${TaskRoomModel.TABLE_NAME}")
     suspend fun getAllTasks(): MutableList<TaskRoomModel>
 
-    @Query("SELECT * FROM ${TaskRoomModel.TABLE_NAME}")
-    fun getAllTasksAsCursor(): Cursor
-
-    @Query("SELECT * FROM ${TaskRoomModel.TABLE_NAME} WHERE ${TaskRoomModel.COLUMN_ID} LIKE :id")
-    fun getTaskByIdAsCursor(id: Long): Cursor
+    @Query("SELECT * FROM ${TaskRoomModel.TABLE_NAME} " +
+            "WHERE ${TaskRoomModel.COLUMN_TITLE} LIKE '%' || :argLetter || '%' " +
+            "OR ${TaskRoomModel.COLUMN_DESCRIPTION} LIKE '%' || :argLetter || '%'")
+    fun getTasksByLetter(argLetter: String): MutableList<TaskRoomModel>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTasks(vararg taskModels: TaskRoomModel)
@@ -23,20 +21,11 @@ interface TaskRoomDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTask(tasks: TaskRoomModel)
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertTaskFromProvider(tasks: TaskRoomModel): Long
-
     @Update
     suspend fun updateTask(taskModel: TaskRoomModel)
 
-    @Update
-    fun updateTaskFromProvider(taskModel: TaskRoomModel): Int
-
     @Delete
     suspend fun deleteTask(taskModel: TaskRoomModel)
-
-//    @Delete
-//    fun deleteTaskById(id: Long): Int
 
     @Query("SELECT * FROM ${TaskRoomModel.TABLE_NAME} WHERE ${TaskRoomModel.COLUMN_TITLE} LIKE :taskTitle")
     suspend fun getTaskByName(taskTitle: String): MutableList<TaskRoomModel>
