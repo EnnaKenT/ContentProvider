@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".ui.screens.addNote.AddNoteActivity">
+    tools:context=".ui.screens.addNote.NoteDetailsActivity">
 
     <FrameLayout
         android:id="@+id/fl_progress_bar_add_note"

@@ -28,10 +28,10 @@
                 android:resource="@xml/searchable" />
         </activity>
         <activity
-            android:name="com.example.contentprovider.ui.screens.addNote.AddNoteActivity"
+            android:name="com.example.contentprovider.ui.screens.addNote.NoteDetailsActivity"
             android:windowSoftInputMode="stateVisible|adjustPan" />
         <activity
-            android:name="com.example.contentprovider.ui.screens.addTask.AddTaskActivity"
+            android:name="com.example.contentprovider.ui.screens.addTask.TaskDetailsActivity"
             android:windowSoftInputMode="stateVisible|adjustPan" />
 
         <provider

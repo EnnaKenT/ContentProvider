@@ -15,11 +15,11 @@ import com.example.contentprovider.utils.setGone
 import com.example.contentprovider.utils.setVisible
 import kotlinx.android.synthetic.main.activity_add_note.*
 
-class AddNoteActivity : BaseActivity<AddNoteContract.Presenter, AddNoteContract.View>(),
-        AddNoteContract.View, View.OnClickListener, Toolbar.OnMenuItemClickListener, () -> Unit {
+class NoteDetailsActivity : BaseActivity<NoteDetailsContract.Presenter, NoteDetailsContract.View>(),
+        NoteDetailsContract.View, View.OnClickListener, Toolbar.OnMenuItemClickListener, () -> Unit {
 
     override val view = this
-    override fun createPresenter() = AddNotePresenter()
+    override fun createPresenter() = NoteDetailsPresenter()
     override fun getLayoutId() = R.layout.activity_add_note
 
     override fun initData() {
@@ -145,7 +145,7 @@ class AddNoteActivity : BaseActivity<AddNoteContract.Presenter, AddNoteContract.
         private const val ARG_NOTE_MODEL = "arg_note_model"
 
         fun getIntent(activity: Activity, noteModel: NoteRoomModel? = null): Intent {
-            val intent = Intent(activity, AddNoteActivity::class.java)
+            val intent = Intent(activity, NoteDetailsActivity::class.java)
             noteModel?.let { intent.putExtra(ARG_NOTE_MODEL, noteModel) }
 
             return intent

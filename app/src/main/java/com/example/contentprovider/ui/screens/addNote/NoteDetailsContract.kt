@@ -4,7 +4,7 @@ import android.text.Editable
 import com.example.contentprovider.room.notesTable.NoteRoomModel
 import com.example.contentprovider.ui.screens.base.BaseContract
 
-class AddNoteContract {
+class NoteDetailsContract {
 
     interface Presenter : BaseContract.BasePresenter<View> {
         fun setRoomModel(noteModel: NoteRoomModel?)

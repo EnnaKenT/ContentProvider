@@ -6,7 +6,7 @@ import com.example.contentprovider.room.notesTable.NoteRoomModel
 import com.example.contentprovider.ui.screens.base.BasePresenter
 import kotlinx.coroutines.launch
 
-class AddNotePresenter : BasePresenter<AddNoteContract.View>(), AddNoteContract.Presenter {
+class NoteDetailsPresenter : BasePresenter<NoteDetailsContract.View>(), NoteDetailsContract.Presenter {
     private var noteModel: NoteRoomModel? = null
 
     override fun setRoomModel(noteModel: NoteRoomModel?) {

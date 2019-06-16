@@ -17,11 +17,11 @@ import com.example.contentprovider.utils.setGone
 import com.example.contentprovider.utils.setVisible
 import kotlinx.android.synthetic.main.activity_add_task.*
 
-class AddTaskActivity : BaseActivity<AddTaskContract.Presenter, AddTaskContract.View>(),
-        AddTaskContract.View, View.OnClickListener, Toolbar.OnMenuItemClickListener, () -> Unit {
+class TaskDetailsActivity : BaseActivity<TaskDetailsContract.Presenter, TaskDetailsContract.View>(),
+        TaskDetailsContract.View, View.OnClickListener, Toolbar.OnMenuItemClickListener, () -> Unit {
 
     override val view = this
-    override fun createPresenter() = AddTaskPresenter()
+    override fun createPresenter() = TaskDetailsPresenter()
     override fun getLayoutId() = R.layout.activity_add_task
 
     private val spinnerData = TaskStatusEnum.values().map { it.text }
@@ -160,7 +160,7 @@ class AddTaskActivity : BaseActivity<AddTaskContract.Presenter, AddTaskContract.
         private const val ARG_TASK_MODEL = "arg_task_model"
 
         fun getIntent(activity: Activity, taskModel: TaskRoomModel? = null): Intent {
-            val intent = Intent(activity, AddTaskActivity::class.java)
+            val intent = Intent(activity, TaskDetailsActivity::class.java)
             taskModel?.let { intent.putExtra(ARG_TASK_MODEL, taskModel) }
 
             return intent

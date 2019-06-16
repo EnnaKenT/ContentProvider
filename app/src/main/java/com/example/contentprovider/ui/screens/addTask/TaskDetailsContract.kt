@@ -5,7 +5,7 @@ import com.example.contentprovider.room.converters.TaskStatusEnum
 import com.example.contentprovider.room.tasksTable.TaskRoomModel
 import com.example.contentprovider.ui.screens.base.BaseContract
 
-class AddTaskContract {
+class TaskDetailsContract {
 
     interface Presenter : BaseContract.BasePresenter<View> {
         fun setRoomModel(taskModel: TaskRoomModel?)

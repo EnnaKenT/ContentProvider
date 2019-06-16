@@ -3,22 +3,27 @@ package com.example.contentprovider.ui.screens.main
 import android.app.ActivityOptions
 import android.app.SearchManager
 import android.content.Context
+import android.content.Intent
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.SearchView
 import com.example.contentprovider.R
-import com.example.contentprovider.ui.screens.addNote.AddNoteActivity
-import com.example.contentprovider.ui.screens.addTask.AddTaskActivity
+import com.example.contentprovider.room.notesTable.NoteRoomModel
+import com.example.contentprovider.room.tasksTable.TaskRoomModel
+import com.example.contentprovider.ui.screens.addNote.NoteDetailsActivity
+import com.example.contentprovider.ui.screens.addTask.TaskDetailsActivity
 import com.example.contentprovider.ui.screens.base.activity.BaseActivity
 import com.example.contentprovider.ui.screens.main.adapter.TableFragmentPagerAdapter
 import com.example.contentprovider.ui.screens.main.adapter.TableTypeEnum
 import com.example.contentprovider.utils.hideKeyboard
+import com.google.gson.Gson
+import com.google.gson.JsonSyntaxException
 import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : BaseActivity<MainContract.Presenter, MainContract.View>(), MainContract.View,
-        View.OnClickListener {
+    View.OnClickListener {
 
     private lateinit var fragmentPagerAdapter: TableFragmentPagerAdapter
 
@@ -95,7 +100,7 @@ class MainActivity : BaseActivity<MainContract.Presenter, MainContract.View>(), 
     }
 
     private fun startTaskActivity() {
-        val intent = AddTaskActivity.getIntent(this)
+        val intent = TaskDetailsActivity.getIntent(this)
 
         val transitionName = getString(R.string.db_item_transition_name)
 
@@ -105,7 +110,7 @@ class MainActivity : BaseActivity<MainContract.Presenter, MainContract.View>(), 
     }
 
     private fun startNoteActivity() {
-        val intent = AddNoteActivity.getIntent(this)
+        val intent = NoteDetailsActivity.getIntent(this)
 
         val transitionName = getString(R.string.db_item_transition_name)
 
@@ -113,6 +118,29 @@ class MainActivity : BaseActivity<MainContract.Presenter, MainContract.View>(), 
         startActivity(intent, transitionActivityOptions.toBundle())
     }
 
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        when (intent?.action) {
+            Intent.ACTION_VIEW -> parseSearchIntent(intent.dataString)
+        }
+    }
+
+    private fun parseSearchIntent(data: String?) {
+        try {
+            val model = Gson().fromJson(data, NoteRoomModel::class.java)
+            startActivity(NoteDetailsActivity.getIntent(this, model))
+            return
+        } catch (e: JsonSyntaxException) {
+
+        }
+        try {
+            val model = Gson().fromJson(data, TaskRoomModel::class.java)
+            startActivity(TaskDetailsActivity.getIntent(this, model))
+            return
+        } catch (e: JsonSyntaxException) {
+
+        }
+    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // Handle action bar item clicks here. The action bar will

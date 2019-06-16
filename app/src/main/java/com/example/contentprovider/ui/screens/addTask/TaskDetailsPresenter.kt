@@ -8,7 +8,7 @@ import com.example.contentprovider.ui.screens.base.BasePresenter
 import kotlinx.coroutines.launch
 import java.util.*
 
-class AddTaskPresenter : BasePresenter<AddTaskContract.View>(), AddTaskContract.Presenter {
+class TaskDetailsPresenter : BasePresenter<TaskDetailsContract.View>(), TaskDetailsContract.Presenter {
 
     private var taskModel: TaskRoomModel? = null
 
