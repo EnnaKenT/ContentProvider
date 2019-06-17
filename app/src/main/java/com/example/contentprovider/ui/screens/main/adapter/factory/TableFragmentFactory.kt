@@ -9,8 +9,8 @@ object TableFragmentFactory {
 
     fun getFragment(type: TableTypeEnum): Fragment {
         return when (type) {
-            TableTypeEnum.NOTES -> NotesFragment()
-            TableTypeEnum.TASKS -> TasksFragment()
+            TableTypeEnum.NOTE -> NotesFragment()
+            TableTypeEnum.TASK -> TasksFragment()
         }
     }
 

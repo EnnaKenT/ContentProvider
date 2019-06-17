@@ -22,4 +22,7 @@
     <string name="toolbar_transition_name">toolbar_transition_name</string>
     <string name="some_action">Some action</string>
     <string name="search_hint">Search</string>
+    <string name="share">Share</string>
+    <string name="send_task">Send Task…</string>
+    <string name="send_note">Send Note…</string>
 </resources>

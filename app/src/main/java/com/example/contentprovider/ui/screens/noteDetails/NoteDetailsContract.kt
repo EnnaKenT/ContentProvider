@@ -1,5 +1,6 @@
-package com.example.contentprovider.ui.screens.addNote
+package com.example.contentprovider.ui.screens.noteDetails
 
+import android.content.Intent
 import android.text.Editable
 import com.example.contentprovider.room.notesTable.NoteRoomModel
 import com.example.contentprovider.ui.screens.base.BaseContract
@@ -7,11 +8,11 @@ import com.example.contentprovider.ui.screens.base.BaseContract
 class NoteDetailsContract {
 
     interface Presenter : BaseContract.BasePresenter<View> {
-        fun setRoomModel(noteModel: NoteRoomModel?)
+        fun setRoomModel(noteModel: NoteRoomModel?, noteId: Int?)
         fun getRoomModel(): NoteRoomModel?
         fun saveModelInDb(title: Editable?, description: Editable)
-        fun checkDeleteIcon()
         fun deleteItemFromDb()
+        fun getUriIntent(): Intent
     }
 
     interface View : BaseContract.BaseView {
@@ -20,7 +21,7 @@ class NoteDetailsContract {
         fun hideProgressBar()
         fun setTitle(title: String)
         fun setDescription(description: String)
-        fun enableDeleteBtn()
+        fun enableBottomBarBtns()
     }
 
 }

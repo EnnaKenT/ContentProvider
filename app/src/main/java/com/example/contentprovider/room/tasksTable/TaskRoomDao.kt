@@ -27,6 +27,9 @@ interface TaskRoomDao {
     @Delete
     suspend fun deleteTask(taskModel: TaskRoomModel)
 
+    @Query("SELECT * FROM ${TaskRoomModel.TABLE_NAME} WHERE ${TaskRoomModel.COLUMN_ID} LIKE :id")
+    suspend fun getTaskById(id: Int): TaskRoomModel
+
     @Query("SELECT * FROM ${TaskRoomModel.TABLE_NAME} WHERE ${TaskRoomModel.COLUMN_TITLE} LIKE :taskTitle")
     suspend fun getTaskByName(taskTitle: String): MutableList<TaskRoomModel>
 

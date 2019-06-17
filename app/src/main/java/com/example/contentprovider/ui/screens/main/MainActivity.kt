@@ -9,21 +9,17 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.SearchView
 import com.example.contentprovider.R
-import com.example.contentprovider.room.notesTable.NoteRoomModel
-import com.example.contentprovider.room.tasksTable.TaskRoomModel
-import com.example.contentprovider.ui.screens.addNote.NoteDetailsActivity
-import com.example.contentprovider.ui.screens.addTask.TaskDetailsActivity
+import com.example.contentprovider.ui.screens.noteDetails.NoteDetailsActivity
+import com.example.contentprovider.ui.screens.taskDetails.TaskDetailsActivity
 import com.example.contentprovider.ui.screens.base.activity.BaseActivity
 import com.example.contentprovider.ui.screens.main.adapter.TableFragmentPagerAdapter
 import com.example.contentprovider.ui.screens.main.adapter.TableTypeEnum
 import com.example.contentprovider.utils.hideKeyboard
-import com.google.gson.Gson
-import com.google.gson.JsonSyntaxException
 import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : BaseActivity<MainContract.Presenter, MainContract.View>(), MainContract.View,
-    View.OnClickListener {
+        View.OnClickListener {
 
     private lateinit var fragmentPagerAdapter: TableFragmentPagerAdapter
 
@@ -94,8 +90,8 @@ class MainActivity : BaseActivity<MainContract.Presenter, MainContract.View>(), 
 
     private fun startAddItemActivity(tableTypeEnum: TableTypeEnum) {
         when (tableTypeEnum) {
-            TableTypeEnum.NOTES -> startNoteActivity()
-            TableTypeEnum.TASKS -> startTaskActivity()
+            TableTypeEnum.NOTE -> startNoteActivity()
+            TableTypeEnum.TASK -> startTaskActivity()
         }
     }
 
@@ -121,24 +117,17 @@ class MainActivity : BaseActivity<MainContract.Presenter, MainContract.View>(), 
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
         when (intent?.action) {
-            Intent.ACTION_VIEW -> parseSearchIntent(intent.dataString)
+            Intent.ACTION_SEARCH -> parseSearchIntent(intent)
         }
     }
 
-    private fun parseSearchIntent(data: String?) {
-        try {
-            val model = Gson().fromJson(data, NoteRoomModel::class.java)
-            startActivity(NoteDetailsActivity.getIntent(this, model))
-            return
-        } catch (e: JsonSyntaxException) {
+    private fun parseSearchIntent(intent: Intent?) {
+        val tableId = intent?.getStringExtra(SearchManager.QUERY)
+        val tableTypeEnum = TableTypeEnum.values().firstOrNull { it.name == intent?.dataString }
 
-        }
-        try {
-            val model = Gson().fromJson(data, TaskRoomModel::class.java)
-            startActivity(TaskDetailsActivity.getIntent(this, model))
-            return
-        } catch (e: JsonSyntaxException) {
-
+        when (tableTypeEnum) {
+            TableTypeEnum.NOTE -> NoteDetailsActivity.startActivity(this, noteId = tableId)
+            TableTypeEnum.TASK -> TaskDetailsActivity.startActivity(this, taskId = tableId)
         }
     }
 

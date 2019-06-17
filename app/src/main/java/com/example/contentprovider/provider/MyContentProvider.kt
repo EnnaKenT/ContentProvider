@@ -10,6 +10,7 @@ import android.net.Uri
 import android.provider.BaseColumns
 import com.example.contentprovider.BuildConfig
 import com.example.contentprovider.room.AppDatabase
+import com.example.contentprovider.ui.screens.main.adapter.TableTypeEnum
 
 class MyContentProvider : ContentProvider() {
 
@@ -24,7 +25,8 @@ class MyContentProvider : ContentProvider() {
             BaseColumns._ID,
             SearchManager.SUGGEST_COLUMN_TEXT_1,
             SearchManager.SUGGEST_COLUMN_TEXT_2,
-            SearchManager.SUGGEST_COLUMN_INTENT_DATA
+            SearchManager.SUGGEST_COLUMN_INTENT_DATA,
+            SearchManager.SUGGEST_COLUMN_QUERY
         )
         private const val SEARCH_CODE = 1
 
@@ -52,10 +54,10 @@ class MyContentProvider : ContentProvider() {
             val notes = AppDatabase.initAppDataBase(context!!)?.noteRoomDao()?.getNoteByLetter(query!!)
             val tasks = AppDatabase.initAppDataBase(context!!)?.taskRoomDao()?.getTasksByLetter(query!!)
             if (!notes.isNullOrEmpty()) {
-                notes.forEach { cursor.addRow(arrayOf(it.id, it.title, it.description, it)) }
+                notes.forEach { cursor.addRow(arrayOf(it.id, it.title, it.description, TableTypeEnum.NOTE, it.id)) }
             }
             if (!tasks.isNullOrEmpty()) {
-                tasks.forEach { cursor.addRow(arrayOf(it.id, it.title, it.description, it)) }
+                tasks.forEach { cursor.addRow(arrayOf(it.id, it.title, it.description, TableTypeEnum.TASK, it.id)) }
             }
             return cursor
         }

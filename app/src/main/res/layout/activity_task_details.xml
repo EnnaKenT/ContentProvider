@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".ui.screens.addNote.NoteDetailsActivity">
+    tools:context=".ui.screens.taskDetails.TaskDetailsActivity">
 
     <FrameLayout
-        android:id="@+id/fl_progress_bar_add_note"
+        android:id="@+id/fl_progress_bar_task_details"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone">
@@ -28,12 +28,12 @@
         android:orientation="vertical">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar_add_note"
+            android:id="@+id/toolbar_task_details"
             android:layout_width="match_parent"
             android:layout_height="?android:actionBarSize" />
 
         <EditText
-            android:id="@+id/et_title_add_note"
+            android:id="@+id/et_title_task_details"
             style="@style/ActivityAddItemTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -45,12 +45,12 @@
             tools:ignore="Autofill" />
 
         <EditText
-            android:id="@+id/et_description_add_note"
+            android:id="@+id/et_description_details_details"
             style="@style/ActivityAddDescription"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:hint="@string/note"
+            android:hint="@string/task"
             android:paddingStart="@dimen/activity_horizontal_margin"
             android:paddingTop="@dimen/activity_vertical_margin"
             android:paddingEnd="@dimen/activity_horizontal_margin"
@@ -58,6 +58,15 @@
             android:transitionName="@string/db_item_transition_name"
             tools:ignore="Autofill"
             tools:targetApi="o" />
+
+        <Spinner
+            android:id="@+id/spinner_task_details"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            android:paddingEnd="@dimen/activity_horizontal_margin"
+            android:paddingBottom="@dimen/activity_vertical_margin" />
 
     </LinearLayout>
 
@@ -68,17 +77,17 @@
         android:layout_alignParentBottom="true">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_add_note"
+            android:id="@+id/fab_task_details"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_action_done"
             app:backgroundTint="@color/primaryLightColor"
             app:fabCradleMargin="@dimen/dimen_6dp"
             app:fabCradleRoundedCornerRadius="@dimen/dimen_20dp"
-            app:layout_anchor="@id/bottomAppBar_add_note" />
+            app:layout_anchor="@id/bottomAppBar_task_details" />
 
         <com.google.android.material.bottomappbar.BottomAppBar
-            android:id="@+id/bottomAppBar_add_note"
+            android:id="@+id/bottomAppBar_task_details"
             style="@style/Widget.MaterialComponents.BottomAppBar.Colored"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

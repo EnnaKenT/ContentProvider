@@ -5,7 +5,7 @@ import android.view.View
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.contentprovider.R
 import com.example.contentprovider.room.tasksTable.TaskRoomModel
-import com.example.contentprovider.ui.screens.addTask.TaskDetailsActivity
+import com.example.contentprovider.ui.screens.taskDetails.TaskDetailsActivity
 import com.example.contentprovider.ui.screens.base.fragment.BaseFragment
 import com.example.contentprovider.ui.screens.main.adapter.tasks.TasksTableAdapter
 import com.example.contentprovider.ui.screens.main.fragment.TableFragmentContract

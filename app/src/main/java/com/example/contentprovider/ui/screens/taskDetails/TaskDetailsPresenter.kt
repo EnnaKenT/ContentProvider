@@ -1,35 +1,51 @@
-package com.example.contentprovider.ui.screens.addTask
+package com.example.contentprovider.ui.screens.taskDetails
 
+import android.content.Intent
 import android.text.Editable
 import com.example.contentprovider.room.AppDatabase
 import com.example.contentprovider.room.converters.TaskStatusEnum
 import com.example.contentprovider.room.tasksTable.TaskRoomModel
 import com.example.contentprovider.ui.screens.base.BasePresenter
+import com.example.contentprovider.utils.getTaskShareIntent
 import kotlinx.coroutines.launch
 import java.util.*
 
 class TaskDetailsPresenter : BasePresenter<TaskDetailsContract.View>(), TaskDetailsContract.Presenter {
 
     private var taskModel: TaskRoomModel? = null
+    private var taskId: Int? = null
 
-    override fun setRoomModel(taskModel: TaskRoomModel?) {
+    override fun setRoomModel(taskModel: TaskRoomModel?, taskId: Int?) {
         this.taskModel = taskModel
+        this.taskId = taskId
 
-        checkExistModel()
+        if (taskModel == null && taskId != null) {
+            getTaskById()
+        } else {
+            checkExistModel()
+        }
+    }
+
+    private fun getTaskById() {
+        launch {
+            view?.showProgressBar()
+            val taskModel = AppDatabase.getAppDataBase()?.taskRoomDao()?.getTaskById(taskId!!)
+            setRoomModel(taskModel, taskId)
+            view?.hideProgressBar()
+        }
     }
 
     private fun checkExistModel() {
         taskModel?.title?.let { view?.setTitle(it) }
         taskModel?.description?.let {
             view?.setDescription(it)
+            view?.enableBottomBarBtns()
         }
         taskModel?.taskStatusEnum?.let { view?.setStatusEnum(it) }
     }
 
-    override fun checkDeleteIcon() {
-        taskModel?.description?.let {
-            view?.enableDeleteBtn()
-        }
+    override fun getUriIntent(): Intent {
+        return Intent().getTaskShareIntent(taskModel)
     }
 
     override fun deleteItemFromDb() {

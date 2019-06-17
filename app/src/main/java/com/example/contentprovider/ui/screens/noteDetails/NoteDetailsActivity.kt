@@ -1,4 +1,4 @@
-package com.example.contentprovider.ui.screens.addNote
+package com.example.contentprovider.ui.screens.noteDetails
 
 import android.app.Activity
 import android.content.Intent
@@ -13,14 +13,14 @@ import com.example.contentprovider.ui.screens.base.activity.BaseActivity
 import com.example.contentprovider.utils.isDbDescriptionValid
 import com.example.contentprovider.utils.setGone
 import com.example.contentprovider.utils.setVisible
-import kotlinx.android.synthetic.main.activity_add_note.*
+import kotlinx.android.synthetic.main.activity_note_details.*
 
 class NoteDetailsActivity : BaseActivity<NoteDetailsContract.Presenter, NoteDetailsContract.View>(),
         NoteDetailsContract.View, View.OnClickListener, Toolbar.OnMenuItemClickListener, () -> Unit {
 
     override val view = this
     override fun createPresenter() = NoteDetailsPresenter()
-    override fun getLayoutId() = R.layout.activity_add_note
+    override fun getLayoutId() = R.layout.activity_note_details
 
     override fun initData() {
         getPresenterRoomModel()
@@ -29,21 +29,21 @@ class NoteDetailsActivity : BaseActivity<NoteDetailsContract.Presenter, NoteDeta
     }
 
     private fun initListeners() {
-        fab_add_note.setOnClickListener(this)
+        fab_note_details.setOnClickListener(this)
     }
 
     private fun getPresenterRoomModel() {
         val noteModel = intent.getParcelableExtra<NoteRoomModel>(ARG_NOTE_MODEL)
-        presenter.setRoomModel(noteModel)
+        val noteId = intent.getStringExtra(ARG_NOTE_ID)?.toIntOrNull()
+        presenter.setRoomModel(noteModel, noteId)
     }
 
     private fun prepareActionBars() {
         // bottom toolbar
-        bottomAppBar_add_note.setOnMenuItemClickListener(this)
-        presenter.checkDeleteIcon()
+        bottomAppBar_note_details.setOnMenuItemClickListener(this)
 
         //top toolbar
-        setSupportActionBar(toolbar_add_note)
+        setSupportActionBar(toolbar_note_details)
         supportActionBar?.run {
             setDisplayShowTitleEnabled(false)
             setDisplayHomeAsUpEnabled(true)
@@ -58,8 +58,8 @@ class NoteDetailsActivity : BaseActivity<NoteDetailsContract.Presenter, NoteDeta
         return true
     }
 
-    override fun enableDeleteBtn() {
-        bottomAppBar_add_note.replaceMenu(R.menu.menu_bottom_add_item_activity)
+    override fun enableBottomBarBtns() {
+        bottomAppBar_note_details.replaceMenu(R.menu.menu_bottom_item_details_activity)
     }
 
     /**
@@ -79,8 +79,13 @@ class NoteDetailsActivity : BaseActivity<NoteDetailsContract.Presenter, NoteDeta
     override fun onMenuItemClick(item: MenuItem?): Boolean {
         when (item?.itemId) {
             R.id.action_delete -> showDeleteDialog()
+            R.id.action_share -> shareNote()
         }
         return true
+    }
+
+    private fun shareNote() {
+        startActivity(Intent.createChooser(presenter.getUriIntent(), getString(R.string.send_note)))
     }
 
     private fun showDeleteDialog() {
@@ -99,41 +104,41 @@ class NoteDetailsActivity : BaseActivity<NoteDetailsContract.Presenter, NoteDeta
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.fab_add_note -> onSaveBtnClicked()
+            R.id.fab_note_details -> onSaveBtnClicked()
         }
     }
 
     private fun onSaveBtnClicked() {
         clearError()
-        if (et_description_add_note.isDbDescriptionValid()) {
-            val title = et_title_add_note.text
-            val description = et_description_add_note.text
+        if (et_description_note_details.isDbDescriptionValid()) {
+            val title = et_title_note_details.text
+            val description = et_description_note_details.text
             presenter.saveModelInDb(title, description)
         } else {
-            et_description_add_note.error = getString(R.string.descr_error)
+            et_description_note_details.error = getString(R.string.descr_error)
         }
     }
 
     override fun setTitle(title: String) {
-        et_title_add_note.setText(title)
+        et_title_note_details.setText(title)
     }
 
     override fun setDescription(description: String) {
-        et_description_add_note.setText(description)
-        et_description_add_note.setSelection(description.length)
-        et_description_add_note.requestFocus()
+        et_description_note_details.setText(description)
+        et_description_note_details.setSelection(description.length)
+        et_description_note_details.requestFocus()
     }
 
     private fun clearError() {
-        et_description_add_note.error = null
+        et_description_note_details.error = null
     }
 
     override fun showProgressBar() {
-        fl_progress_bar_add_note.setVisible()
+        fl_progress_bar_note_details.setVisible()
     }
 
     override fun hideProgressBar() {
-        fl_progress_bar_add_note.setGone()
+        fl_progress_bar_note_details.setGone()
     }
 
     override fun noteSaved() {
@@ -143,12 +148,17 @@ class NoteDetailsActivity : BaseActivity<NoteDetailsContract.Presenter, NoteDeta
     companion object {
 
         private const val ARG_NOTE_MODEL = "arg_note_model"
+        private const val ARG_NOTE_ID = "arg_note_id"
 
-        fun getIntent(activity: Activity, noteModel: NoteRoomModel? = null): Intent {
-            val intent = Intent(activity, NoteDetailsActivity::class.java)
-            noteModel?.let { intent.putExtra(ARG_NOTE_MODEL, noteModel) }
+        fun getIntent(activity: Activity, noteModel: NoteRoomModel? = null, noteId: String? = null): Intent {
+            return Intent(activity, NoteDetailsActivity::class.java).apply {
+                putExtra(ARG_NOTE_MODEL, noteModel)
+                putExtra(ARG_NOTE_ID, noteId)
+            }
+        }
 
-            return intent
+        fun startActivity(activity: Activity, noteModel: NoteRoomModel? = null, noteId: String? = null) {
+            activity.startActivity(getIntent(activity, noteModel, noteId))
         }
 
     }

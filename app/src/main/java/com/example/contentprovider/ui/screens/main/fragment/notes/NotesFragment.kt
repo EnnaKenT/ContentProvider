@@ -5,7 +5,7 @@ import android.view.View
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.contentprovider.R
 import com.example.contentprovider.room.notesTable.NoteRoomModel
-import com.example.contentprovider.ui.screens.addNote.NoteDetailsActivity
+import com.example.contentprovider.ui.screens.noteDetails.NoteDetailsActivity
 import com.example.contentprovider.ui.screens.base.fragment.BaseFragment
 import com.example.contentprovider.ui.screens.main.adapter.notes.NotesTableAdapter
 import com.example.contentprovider.ui.screens.main.fragment.TableFragmentContract
