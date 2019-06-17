@@ -28,6 +28,7 @@ class TaskDetailsActivity : BaseActivity<TaskDetailsContract.Presenter, TaskDeta
     private val spinnerData = TaskStatusEnum.values().map { it.text }
 
     override fun initData() {
+        et_description_details_details.requestFocus()
         getPresenterRoomModel()
         prepareActionBars()
         prepareSpinner()
@@ -125,7 +126,6 @@ class TaskDetailsActivity : BaseActivity<TaskDetailsContract.Presenter, TaskDeta
     override fun setDescription(description: String) {
         et_description_details_details.setText(description)
         et_description_details_details.setSelection(description.length)
-        et_description_details_details.requestFocus()
     }
 
     override fun enableBottomBarBtns() {

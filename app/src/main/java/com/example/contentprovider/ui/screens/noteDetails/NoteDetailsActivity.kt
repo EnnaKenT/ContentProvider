@@ -23,6 +23,7 @@ class NoteDetailsActivity : BaseActivity<NoteDetailsContract.Presenter, NoteDeta
     override fun getLayoutId() = R.layout.activity_note_details
 
     override fun initData() {
+        et_description_note_details.requestFocus()
         getPresenterRoomModel()
         prepareActionBars()
         initListeners()
@@ -126,7 +127,6 @@ class NoteDetailsActivity : BaseActivity<NoteDetailsContract.Presenter, NoteDeta
     override fun setDescription(description: String) {
         et_description_note_details.setText(description)
         et_description_note_details.setSelection(description.length)
-        et_description_note_details.requestFocus()
     }
 
     private fun clearError() {

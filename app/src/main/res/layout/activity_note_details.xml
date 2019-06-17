@@ -1,11 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:context=".ui.screens.noteDetails.NoteDetailsActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_note_details"
+        android:layout_width="match_parent"
+        android:layout_height="?android:actionBarSize" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingStart="@dimen/activity_horizontal_margin"
+        android:paddingTop="?android:actionBarSize"
+        android:paddingEnd="@dimen/activity_horizontal_margin"
+        android:paddingBottom="?android:actionBarSize">
+
+        <EditText
+            android:id="@+id/et_title_note_details"
+            style="@style/ActivityAddItemTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/title"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            tools:ignore="Autofill" />
+
+        <EditText
+            android:id="@+id/et_description_note_details"
+            style="@style/ActivityAddDescription"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:hint="@string/note"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:transitionName="@string/db_item_transition_name"
+            tools:ignore="Autofill"
+            tools:targetApi="o" />
+
+    </LinearLayout>
 
     <FrameLayout
         android:id="@+id/fl_progress_bar_note_details"
@@ -20,71 +59,22 @@
 
     </FrameLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/cl"
-        android:layout_alignParentTop="true"
-        android:orientation="vertical">
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_note_details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_action_done"
+        app:backgroundTint="@color/primaryLightColor"
+        app:fabCradleMargin="@dimen/dimen_6dp"
+        app:fabCradleRoundedCornerRadius="@dimen/dimen_20dp"
+        app:layout_anchor="@id/bottomAppBar_note_details" />
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar_note_details"
-            android:layout_width="match_parent"
-            android:layout_height="?android:actionBarSize" />
-
-        <EditText
-            android:id="@+id/et_title_note_details"
-            style="@style/ActivityAddItemTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/title"
-            android:paddingStart="@dimen/activity_horizontal_margin"
-            android:paddingTop="@dimen/activity_vertical_margin"
-            android:paddingEnd="@dimen/activity_horizontal_margin"
-            android:paddingBottom="@dimen/activity_vertical_margin"
-            tools:ignore="Autofill" />
-
-        <EditText
-            android:id="@+id/et_description_note_details"
-            style="@style/ActivityAddDescription"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:hint="@string/note"
-            android:paddingStart="@dimen/activity_horizontal_margin"
-            android:paddingTop="@dimen/activity_vertical_margin"
-            android:paddingEnd="@dimen/activity_horizontal_margin"
-            android:paddingBottom="@dimen/activity_vertical_margin"
-            android:transitionName="@string/db_item_transition_name"
-            tools:ignore="Autofill"
-            tools:targetApi="o" />
-
-    </LinearLayout>
-
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:id="@+id/cl"
+    <com.google.android.material.bottomappbar.BottomAppBar
+        android:id="@+id/bottomAppBar_note_details"
+        style="@style/Widget.MaterialComponents.BottomAppBar.Colored"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true">
+        android:layout_gravity="bottom"
+        app:fabAlignmentMode="end" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_note_details"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_action_done"
-            app:backgroundTint="@color/primaryLightColor"
-            app:fabCradleMargin="@dimen/dimen_6dp"
-            app:fabCradleRoundedCornerRadius="@dimen/dimen_20dp"
-            app:layout_anchor="@id/bottomAppBar_note_details" />
-
-        <com.google.android.material.bottomappbar.BottomAppBar
-            android:id="@+id/bottomAppBar_note_details"
-            style="@style/Widget.MaterialComponents.BottomAppBar.Colored"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            app:fabAlignmentMode="end" />
-
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-</RelativeLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
