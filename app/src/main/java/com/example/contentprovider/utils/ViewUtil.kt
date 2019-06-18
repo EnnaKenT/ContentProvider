@@ -10,7 +10,6 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.annotation.StringRes
 
-
 fun View.setGone() {
     if (visibility != View.GONE) {
         visibility = View.GONE

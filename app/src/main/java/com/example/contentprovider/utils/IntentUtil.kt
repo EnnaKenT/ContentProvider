@@ -4,7 +4,7 @@ import android.content.Intent
 import com.example.contentprovider.room.notesTable.NoteRoomModel
 import com.example.contentprovider.room.tasksTable.TaskRoomModel
 
-fun Intent.getTaskShareIntent(taskModel: TaskRoomModel?): Intent {
+fun getTaskShareIntent(taskModel: TaskRoomModel?): Intent {
     val body = "${taskModel?.title}\n\n" +
             "${taskModel?.description}\n\n" +
             "${taskModel?.taskStatusEnum?.text}\n" +
@@ -16,7 +16,7 @@ fun Intent.getTaskShareIntent(taskModel: TaskRoomModel?): Intent {
     }
 }
 
-fun Intent.getNoteShareIntent(noteModel: NoteRoomModel?): Intent {
+fun getNoteShareIntent(noteModel: NoteRoomModel?): Intent {
     val body = "${noteModel?.title}\n\n" +
             "${noteModel?.description}"
     return Intent(Intent.ACTION_SEND).apply {

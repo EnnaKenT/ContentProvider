@@ -45,7 +45,7 @@ class TaskDetailsPresenter : BasePresenter<TaskDetailsContract.View>(), TaskDeta
     }
 
     override fun getUriIntent(): Intent {
-        return Intent().getTaskShareIntent(taskModel)
+        return getTaskShareIntent(taskModel)
     }
 
     override fun deleteItemFromDb() {

@@ -42,7 +42,7 @@ class NoteDetailsPresenter : BasePresenter<NoteDetailsContract.View>(), NoteDeta
     }
 
     override fun getUriIntent(): Intent {
-        return Intent().getNoteShareIntent(noteModel)
+        return getNoteShareIntent(noteModel)
     }
 
     override fun deleteItemFromDb() {

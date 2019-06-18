@@ -55,7 +55,7 @@ class NoteDetailsActivity : BaseActivity<NoteDetailsContract.Presenter, NoteDeta
      * top toolbar
      */
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_top_add_item_activity, menu)
+        menuInflater.inflate(R.menu.menu_top_item_details_activity, menu)
         return true
     }
 

@@ -2,7 +2,6 @@ package com.example.contentprovider.ui.screens.taskDetails
 
 import android.app.Activity
 import android.content.Intent
-import android.content.res.Configuration
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -61,7 +60,7 @@ class TaskDetailsActivity : BaseActivity<TaskDetailsContract.Presenter, TaskDeta
      * top toolbar
      */
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_top_add_item_activity, menu)
+        menuInflater.inflate(R.menu.menu_top_item_details_activity, menu)
         return true
     }
 
