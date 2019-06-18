@@ -20,6 +20,7 @@
             app:tabBackground="@color/primaryLightColor"
             app:tabGravity="fill"
             app:tabIndicatorHeight="@dimen/dimen_4dp"
+            app:tabMaxWidth="0dp"
             app:tabMode="fixed"
             app:tabSelectedTextColor="@color/charcoal"
             app:tabTextColor="@color/nobel" />
