@@ -11,6 +11,7 @@ import android.provider.BaseColumns
 import com.example.contentprovider.BuildConfig
 import com.example.contentprovider.room.AppDatabase
 import com.example.contentprovider.ui.screens.main.adapter.TableTypeEnum
+import kotlinx.coroutines.runBlocking
 
 class MyContentProvider : ContentProvider() {
 
@@ -22,11 +23,11 @@ class MyContentProvider : ContentProvider() {
         private const val SEARCH = SearchManager.SUGGEST_URI_PATH_QUERY + "/*"
 
         private val SEARCH_SUGGEST_COLUMNS = arrayOf(
-            BaseColumns._ID,
-            SearchManager.SUGGEST_COLUMN_TEXT_1,
-            SearchManager.SUGGEST_COLUMN_TEXT_2,
-            SearchManager.SUGGEST_COLUMN_INTENT_DATA,
-            SearchManager.SUGGEST_COLUMN_QUERY
+                BaseColumns._ID,
+                SearchManager.SUGGEST_COLUMN_TEXT_1,
+                SearchManager.SUGGEST_COLUMN_TEXT_2,
+                SearchManager.SUGGEST_COLUMN_INTENT_DATA,
+                SearchManager.SUGGEST_COLUMN_QUERY
         )
         private const val SEARCH_CODE = 1
 
@@ -41,23 +42,25 @@ class MyContentProvider : ContentProvider() {
     override fun onCreate() = true
 
     override fun query(
-        uri: Uri, projection: Array<String>?,
-        selection: String?,
-        selectionArgs: Array<String>?,
-        sortOrder: String?
+            uri: Uri, projection: Array<String>?,
+            selection: String?,
+            selectionArgs: Array<String>?,
+            sortOrder: String?
     ): Cursor? {
         val code = MATCHER.match(uri)
         if (code == SEARCH_CODE) {
             val cursor = MatrixCursor(SEARCH_SUGGEST_COLUMNS)
             val query = uri.lastPathSegment?.toLowerCase()
 
-            val notes = AppDatabase.initAppDataBase(context!!)?.noteRoomDao()?.getNoteByLetter(query!!)
-            val tasks = AppDatabase.initAppDataBase(context!!)?.taskRoomDao()?.getTasksByLetter(query!!)
-            if (!notes.isNullOrEmpty()) {
-                notes.forEach { cursor.addRow(arrayOf(it.id, it.title, it.description, TableTypeEnum.NOTE, it.id)) }
-            }
-            if (!tasks.isNullOrEmpty()) {
-                tasks.forEach { cursor.addRow(arrayOf(it.id, it.title, it.description, TableTypeEnum.TASK, it.id)) }
+            runBlocking {
+                val notes = AppDatabase.initAppDataBase(context!!)?.noteRoomDao()?.getNoteByLetter(query!!)
+                val tasks = AppDatabase.initAppDataBase(context!!)?.taskRoomDao()?.getTasksByLetter(query!!)
+                notes?.run {
+                    forEach { cursor.addRow(arrayOf(it.id, it.title, it.description, TableTypeEnum.NOTE, it.id)) }
+                }
+                tasks?.run {
+                    forEach { cursor.addRow(arrayOf(it.id, it.title, it.description, TableTypeEnum.TASK, it.id)) }
+                }
             }
             return cursor
         }
@@ -89,9 +92,9 @@ class MyContentProvider : ContentProvider() {
      * not permitted yet in manifest
      */
     override fun update(
-        uri: Uri, values: ContentValues?,
-        selection: String?,
-        selectionArgs: Array<String>?
+            uri: Uri, values: ContentValues?,
+            selection: String?,
+            selectionArgs: Array<String>?
     ): Int {
         throw UnsupportedOperationException()
     }

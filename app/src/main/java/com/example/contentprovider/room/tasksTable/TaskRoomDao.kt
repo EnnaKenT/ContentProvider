@@ -13,7 +13,7 @@ interface TaskRoomDao {
     @Query("SELECT * FROM ${TaskRoomModel.TABLE_NAME} " +
             "WHERE ${TaskRoomModel.COLUMN_TITLE} LIKE '%' || :argLetter || '%' " +
             "OR ${TaskRoomModel.COLUMN_DESCRIPTION} LIKE '%' || :argLetter || '%'")
-    fun getTasksByLetter(argLetter: String): MutableList<TaskRoomModel>
+    suspend fun getTasksByLetter(argLetter: String): MutableList<TaskRoomModel>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTasks(vararg taskModels: TaskRoomModel)

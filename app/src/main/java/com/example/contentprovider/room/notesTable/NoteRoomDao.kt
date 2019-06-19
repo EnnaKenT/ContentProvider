@@ -11,7 +11,7 @@ interface NoteRoomDao {
     @Query("SELECT * FROM ${NoteRoomModel.TABLE_NAME} " +
             "WHERE ${NoteRoomModel.COLUMN_TITLE} LIKE '%' || :argLetter || '%' " +
             "OR ${NoteRoomModel.COLUMN_DESCRIPTION} LIKE '%' || :argLetter || '%'")
-    fun getNoteByLetter(argLetter: String): MutableList<NoteRoomModel>
+    suspend fun getNoteByLetter(argLetter: String): MutableList<NoteRoomModel>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertNotes(vararg noteModels: NoteRoomModel)
