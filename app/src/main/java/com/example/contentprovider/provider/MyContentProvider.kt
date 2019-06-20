@@ -69,7 +69,7 @@ class MyContentProvider : ContentProvider() {
 
     override fun getType(uri: Uri): String? {
         return when (MATCHER.match(uri)) {
-            1 -> "vnd.android.cursor.item/$AUTHORITY.$SEARCH"
+            SEARCH_CODE -> "vnd.android.cursor.item/$AUTHORITY.$SEARCH"
             else -> throw IllegalArgumentException("Unknown URI: $uri")
         }
     }
