@@ -9,7 +9,6 @@ android {
     compileSdkVersion(AndroidSdk.compile)
     defaultConfig {
         applicationId = "com.example.contentprovider"
-        this.
         minSdkVersion(AndroidSdk.min)
         targetSdkVersion(AndroidSdk.target)
         versionCode = 1
