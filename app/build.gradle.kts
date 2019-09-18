@@ -15,25 +15,23 @@ android {
         versionName = "1.0"
         testInstrumentationRunner = AndroidSdk.androidJUnitRunner
 
-        kapt {
-            arguments {
-                arg("room.schemaLocation", "$projectDir/schemas")
-            }
+        kapt.arguments {
+            arg("room.schemaLocation", "$projectDir/schemas")
         }
+
         resValue("string", ContentProvider.name, ContentProvider.value)
         buildConfigField("String", ContentProvider.name, "\"${ContentProvider.value}\"")
     }
-    buildTypes {
-        getByName("release") {
-            isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-        }
+    buildTypes.getByName("release") {
+        isMinifyEnabled = false
+        proguardFiles(
+            getDefaultProguardFile("proguard-android-optimize.txt"),
+            "proguard-rules.pro"
+        )
     }
 }
 
-androidExtensions {
-    isExperimental = true
-}
+androidExtensions.isExperimental = true
 
 dependencies {
     implementation(fileTree(FileTree.fileTree))
