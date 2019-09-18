@@ -1,8 +1,8 @@
 plugins {
-    id(BuildPlugins.androidApplication)
-    id(BuildPlugins.kotlinAndroid)
-    id(BuildPlugins.kotlinAndroidExtensions)
-    id(BuildPlugins.kotlinKapt)
+    id("com.android.application")
+    id("kotlin-android")
+    id("kotlin-android-extensions")
+    id("kotlin-kapt")
 }
 
 android {
@@ -13,7 +13,7 @@ android {
         targetSdkVersion(AndroidSdk.target)
         versionCode = 1
         versionName = "1.0"
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = AndroidSdk.androidJUnitRunner
 
         kapt {
             arguments {
@@ -37,19 +37,19 @@ androidExtensions {
 
 dependencies {
     implementation(fileTree(FileTree.fileTree))
-    implementation(Libraries.kotlinStdLib)
-    implementation(Libraries.appCompat)
-    implementation(Libraries.ktxCore)
-    implementation(Libraries.material)
-    implementation(Libraries.constraintLayout)
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion")
+    implementation("androidx.appcompat:appcompat:1.1.0")
+    implementation("androidx.core:core-ktx:1.2.0-alpha04")
+    implementation("com.google.android.material:material:1.1.0-alpha10")
+    implementation("androidx.constraintlayout:constraintlayout:2.0.0-beta2")
 
-    testImplementation(TestLibraries.junit4)
-    androidTestImplementation(TestLibraries.testRunner)
-    androidTestImplementation(TestLibraries.espresso)
+    testImplementation("junit:junit:4.13-beta-2")
+    androidTestImplementation("androidx.test:runner:1.2.0")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.2.0")
 
-    implementation(Libraries.coroutinesCore)
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.1")
 
-    implementation(Libraries.roomKtx)
-    implementation(Libraries.roomRuntime)
-    kapt(Libraries.roomCompiler)
+    implementation("androidx.room:room-ktx:$roomVersion")
+    implementation("androidx.room:room-runtime:$roomVersion")
+    kapt("androidx.room:room-compiler:$roomVersion")
 }
