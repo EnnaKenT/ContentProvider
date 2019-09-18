@@ -5,7 +5,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.example.contentprovider.ui.screens.main.adapter.factory.TableFragmentFactory
-
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 class TableFragmentPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
     var selectedFragmentPosition: Int = 0
@@ -14,6 +14,7 @@ class TableFragmentPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm, 
         return TableFragmentFactory.getTitle(TableTypeEnum.values()[position])
     }
 
+    @ExperimentalCoroutinesApi
     override fun getItem(position: Int): Fragment {
         return TableFragmentFactory.getFragment(TableTypeEnum.values()[position])
     }
