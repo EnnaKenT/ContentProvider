@@ -3,10 +3,8 @@ package com.example.contentprovider.application
 import android.app.Application
 import com.example.contentprovider.room.AppDatabase
 import com.example.contentprovider.shredPrefs.SharedPreferencesHelper
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.BroadcastChannel
 
-@ExperimentalCoroutinesApi
 class App : Application(), AppBridge {
 
     override val sharedPreferencesHelper: SharedPreferencesHelper by lazy { SharedPreferencesHelper(this) }

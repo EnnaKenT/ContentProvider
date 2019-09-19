@@ -13,9 +13,7 @@ import com.example.contentprovider.ui.screens.taskDetails.TaskDetailsActivity
 import com.example.contentprovider.utils.setGone
 import com.example.contentprovider.utils.setVisible
 import kotlinx.android.synthetic.main.fragment_table.*
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 
-@ExperimentalCoroutinesApi
 class TasksFragment :
         BaseFragment<TableFragmentContract.Presenter<TaskRoomModel>, TableFragmentContract.View<TaskRoomModel>>(),
         TableFragmentContract.View<TaskRoomModel>, (TaskRoomModel, View) -> Unit {
@@ -30,6 +28,22 @@ class TasksFragment :
         initRv()
         presenter.prepareDatabaseModels()
     }
+
+    override fun onStart() {
+        super.onStart()
+//        sendChannel()
+    }
+
+//    private fun sendChannel() {
+//        val channel = (activity?.application as App).broadcastChannel
+//        GlobalScope.launch {
+//            channel.send(ChannelEvents.DatabaseItemUpdated())
+//            channel.send(ChannelEvents.DatabaseItemUpdated())
+//            channel.send(ChannelEvents.DatabaseItemUpdated())
+//            channel.send(ChannelEvents.DatabaseItemUpdated())
+//            channel.send(ChannelEvents.DatabaseItemUpdated())
+//        }
+//    }
 
     private fun initRv() {
         tasksAdapter = TasksTableAdapter(this)

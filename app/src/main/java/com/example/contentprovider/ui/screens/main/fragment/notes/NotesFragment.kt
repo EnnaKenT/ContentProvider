@@ -12,12 +12,10 @@ import com.example.contentprovider.ui.screens.main.fragment.TableFragmentContrac
 import com.example.contentprovider.utils.setGone
 import com.example.contentprovider.utils.setVisible
 import kotlinx.android.synthetic.main.fragment_table.*
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 
-@ExperimentalCoroutinesApi
 class NotesFragment :
-        BaseFragment<TableFragmentContract.Presenter<NoteRoomModel>, TableFragmentContract.View<NoteRoomModel>>(),
-        TableFragmentContract.View<NoteRoomModel>, (NoteRoomModel, View) -> Unit {
+    BaseFragment<TableFragmentContract.Presenter<NoteRoomModel>, TableFragmentContract.View<NoteRoomModel>>(),
+    TableFragmentContract.View<NoteRoomModel>, (NoteRoomModel, View) -> Unit {
 
     private lateinit var notesAdapter: NotesTableAdapter
 
@@ -54,7 +52,8 @@ class NotesFragment :
         activity?.let {
             val transitionName = getString(R.string.db_item_transition_name)
 
-            val transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation(it, view, transitionName)
+            val transitionActivityOptions =
+                ActivityOptions.makeSceneTransitionAnimation(it, view, transitionName)
             val intent = NoteDetailsActivity.getIntent(it, noteModel)
             startActivity(intent, transitionActivityOptions.toBundle())
         }
