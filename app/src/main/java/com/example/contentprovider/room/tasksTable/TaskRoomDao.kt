@@ -10,9 +10,12 @@ interface TaskRoomDao {
     @Query("SELECT * FROM ${TaskRoomModel.TABLE_NAME}")
     suspend fun getAllTasks(): MutableList<TaskRoomModel>
 
-    @Query("SELECT * FROM ${TaskRoomModel.TABLE_NAME} " +
-            "WHERE ${TaskRoomModel.COLUMN_TITLE} LIKE '%' || :argLetter || '%' " +
-            "OR ${TaskRoomModel.COLUMN_DESCRIPTION} LIKE '%' || :argLetter || '%'")
+    @Query(
+        """SELECT * 
+        FROM ${TaskRoomModel.TABLE_NAME} 
+        WHERE ${TaskRoomModel.COLUMN_TITLE} LIKE '%' || :argLetter || '%' 
+        OR ${TaskRoomModel.COLUMN_DESCRIPTION} LIKE '%' || :argLetter || '%'"""
+    )
     suspend fun getTasksByLetter(argLetter: String): MutableList<TaskRoomModel>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -27,19 +30,39 @@ interface TaskRoomDao {
     @Delete
     suspend fun deleteTask(taskModel: TaskRoomModel)
 
-    @Query("SELECT * FROM ${TaskRoomModel.TABLE_NAME} WHERE ${TaskRoomModel.COLUMN_ID} LIKE :id")
+    @Query(
+        """SELECT * 
+        FROM ${TaskRoomModel.TABLE_NAME} 
+        WHERE ${TaskRoomModel.COLUMN_ID} LIKE :id"""
+    )
     suspend fun getTaskById(id: Int): TaskRoomModel
 
-    @Query("SELECT * FROM ${TaskRoomModel.TABLE_NAME} WHERE ${TaskRoomModel.COLUMN_TITLE} LIKE :taskTitle")
+    @Query(
+        """SELECT * 
+        FROM ${TaskRoomModel.TABLE_NAME} 
+        WHERE ${TaskRoomModel.COLUMN_TITLE} LIKE :taskTitle"""
+    )
     suspend fun getTaskByName(taskTitle: String): MutableList<TaskRoomModel>
 
-    @Query("SELECT * FROM ${TaskRoomModel.TABLE_NAME} WHERE ${TaskRoomModel.COLUMN_DESCRIPTION} LIKE :taskDescription")
+    @Query(
+        """SELECT * 
+        FROM ${TaskRoomModel.TABLE_NAME} 
+        WHERE ${TaskRoomModel.COLUMN_DESCRIPTION} LIKE :taskDescription"""
+    )
     suspend fun getTaskByDescr(taskDescription: String): MutableList<TaskRoomModel>
 
-    @Query("SELECT * FROM ${TaskRoomModel.TABLE_NAME} WHERE ${TaskRoomModel.COLUMN_CREATED_TIME} LIKE :taskCreatedTime")
+    @Query(
+        """SELECT * 
+        FROM ${TaskRoomModel.TABLE_NAME} 
+        WHERE ${TaskRoomModel.COLUMN_CREATED_TIME} LIKE :taskCreatedTime"""
+    )
     suspend fun getTaskByCreatedTime(taskCreatedTime: Date): MutableList<TaskRoomModel>
 
-    @Query("SELECT * FROM ${TaskRoomModel.TABLE_NAME} WHERE ${TaskRoomModel.COLUMN_TASK_STATUS} LIKE :taskStatusEnum")
+    @Query(
+        """SELECT * 
+        FROM ${TaskRoomModel.TABLE_NAME} 
+        WHERE ${TaskRoomModel.COLUMN_TASK_STATUS} LIKE :taskStatusEnum"""
+    )
     suspend fun getTaskByStatus(taskStatusEnum: TaskStatusEnum): MutableList<TaskRoomModel>
 
 }
