@@ -36,16 +36,16 @@ androidExtensions.isExperimental = true
 dependencies {
     implementation(fileTree(FileTree.fileTree))
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion")
-    implementation("androidx.appcompat:appcompat:1.1.0")
-    implementation("androidx.core:core-ktx:1.2.0-alpha04")
-    implementation("com.google.android.material:material:1.1.0-alpha10")
-    implementation("androidx.constraintlayout:constraintlayout:2.0.0-beta2")
+    implementation("androidx.appcompat:appcompat:1.2.0")
+    implementation("androidx.core:core-ktx:1.6.0-alpha03")
+    implementation("com.google.android.material:material:1.4.0-alpha02")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.0-beta02")
 
     testImplementation("junit:junit:4.13-beta-2")
-    androidTestImplementation("androidx.test:runner:1.2.0")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.2.0")
+    androidTestImplementation("androidx.test:runner:1.3.0")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.3.0")
 
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.1")
 
     implementation("androidx.room:room-ktx:$roomVersion")
     implementation("androidx.room:room-runtime:$roomVersion")

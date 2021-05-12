@@ -1,5 +1,5 @@
-const val kotlinVersion = "1.3.50"
-const val roomVersion = "2.1.0"
+const val kotlinVersion = "1.5.0"
+const val roomVersion = "2.3.0"
 
 object AndroidSdk {
     const val min = 24

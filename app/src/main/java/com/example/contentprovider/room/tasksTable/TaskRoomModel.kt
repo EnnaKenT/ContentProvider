@@ -54,7 +54,7 @@ data class TaskRoomModel(
                 return TaskRoomModel(
                     id,
                     title,
-                    description,
+                    it,
                     Date(System.currentTimeMillis()),
                     TaskStatusEnum.IN_PROGRESS
                 )
